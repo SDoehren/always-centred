@@ -27,10 +27,27 @@ Hooks.once('init', async () => {
         type: Number
     });
 
+    game.settings.register("always-centred", "cleandisplay", {
+        name: "Remove Display Unneeded Elements",
+        scope: "client",
+        config: true,
+        default: false,
+        type: Boolean
+    });
+
 });
 
 
 Hooks.on("ready", function() {
+    if (!(game.settings.get("always-centred",'alwayscenter',))){
+        document.getElementById("navigation").remove();
+        document.getElementById("controls").remove();
+        document.getElementById("hotbar").remove();
+        document.getElementById("players").remove();
+        document.getElementById("chat-controls").remove();
+        document.getElementById("chat-form").remove();
+    };
+
   console.log('always-centred | Ready');
 });
 
