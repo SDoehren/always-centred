@@ -11,6 +11,14 @@ Hooks.once('init', async () => {
         type: Boolean
     });
 
+    game.settings.register("always-centred", "onlyselected", {
+        name: "Only Centre on Selected Token",
+        scope: "client",
+        config: true,
+        default: false,
+        type: Boolean
+    });
+
     game.settings.register("always-centred", "maxzoom", {
         name: "Max zoom level",
         scope: "client",
@@ -39,7 +47,7 @@ Hooks.once('init', async () => {
 
 
 Hooks.on("ready", function() {
-    if (!(game.settings.get("always-centred",'alwayscenter',))){
+    if (game.settings.get("always-centred",'cleandisplay',)){
         document.getElementById("navigation").remove();
         document.getElementById("controls").remove();
         document.getElementById("hotbar").remove();
@@ -57,6 +65,18 @@ Hooks.on('updateToken', async (scene, token, delta, diff, userId) => {
 
     //check setting is on
     if (!(game.settings.get("always-centred",'alwayscenter',))){return;};
+
+
+    if ((game.settings.get("always-centred",'onlyselected',))){
+
+        let Xmid = token.x+canvas.grid.w/2;
+        let Ymid = token.y+canvas.grid.h/2;
+        let sidebarsize = 298/canvas.stage.scale.x
+        canvas.animatePan({x:Xmid+sidebarsize/2,y:Ymid, duration: game.settings.get("always-centred",'updatespeed',)});
+        console.debug('always-centred | x:'+token.x+sidebarsize/2+'|y:'+token.y);
+        window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
+    } else {
+
 
     /*
     get list of tokens
@@ -118,13 +138,15 @@ Hooks.on('updateToken', async (scene, token, delta, diff, userId) => {
         zoom = game.settings.get("always-centred",'maxzoom',)
     };
 
-
+    let sidebarsize = 298/zoom
     //move camera
-    canvas.animatePan({x:Xmid,y:Ymid,scale:zoom, duration: game.settings.get("always-centred",'updatespeed',)});
+    canvas.animatePan({x:Xmid+sidebarsize/2,y:Ymid,scale:zoom, duration: game.settings.get("always-centred",'updatespeed',)});
 
     //message the console
-    console.debug('always-centred | x:'+Xmid+'|y:'+Ymid+'zoom:'+zoom);
-
+    console.debug('always-centred | x:'+Xmid+sidebarsize/2+'|y:'+Ymid+'zoom:'+zoom);
     //Pings module for debug only (https://gitlab.com/foundry-azzurite/pings/-/blob/master/README.md)
-    //window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
+    window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
+    };
+
+
 });
