@@ -1,47 +1,11 @@
+import { registerSettings } from './settings';
+console.log('always-centred | 1');
 /* ------------------------------------ */
 /* Initialize module                    */
 /* ------------------------------------ */
 Hooks.once('init', async () => {
     console.log('always-centred | Initializing always-centred');
-    game.settings.register("always-centred", "alwayscenter", {
-        name: "Centre View Continuously?",
-        scope: "client",
-        config: true,
-        default: false,
-        type: Boolean
-    });
-
-    game.settings.register("always-centred", "onlyselected", {
-        name: "Only Centre on Selected Token",
-        scope: "client",
-        config: true,
-        default: false,
-        type: Boolean
-    });
-
-    game.settings.register("always-centred", "maxzoom", {
-        name: "Max zoom level",
-        scope: "client",
-        config: true,
-        default: 1,
-        type: Number
-    });
-
-    game.settings.register("always-centred", "updatespeed", {
-        name: "Camera animation speed",
-        scope: "client",
-        config: true,
-        default: 500,
-        type: Number
-    });
-
-    game.settings.register("always-centred", "cleandisplay", {
-        name: "Remove Display Unneeded Elements",
-        scope: "client",
-        config: true,
-        default: false,
-        type: Boolean
-    });
+    registerSettings();
 
 });
 
@@ -61,26 +25,37 @@ Hooks.on("ready", function() {
 
 
 Hooks.on('updateToken', async (scene, token, delta, diff, userId) => {
-    console.log(token);
-
+    console.log(game.settings.get("always-centred",'mode',))
     //check setting is on
-    if (!(game.settings.get("always-centred",'alwayscenter',))){return;};
+    if (game.settings.get("always-centred",'mode',)=="disabled"){return;};
 
 
-    if ((game.settings.get("always-centred",'onlyselected',))){
+    if (game.settings.get("always-centred",'mode',)=="selectedtoken"){
+
+        /*
+        get list of tokens
+        check if selected by current player
+        get token ids
+         */
+        let controlled = canvas.tokens.controlled
+        let controlledids = controlled.map(c => c.id);
+
+        //if not selected by player exit early
+        if (!(controlledids.includes(token._id))){return;};
 
         let Xmid = token.x+canvas.grid.w/2;
         let Ymid = token.y+canvas.grid.h/2;
         let sidebarsize = 298/canvas.stage.scale.x
         canvas.animatePan({x:Xmid+sidebarsize/2,y:Ymid, duration: game.settings.get("always-centred",'updatespeed',)});
         console.debug('always-centred | x:'+token.x+sidebarsize/2+'|y:'+token.y);
-        window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
-    } else {
+        //Pings module for debug only (https://gitlab.com/foundry-azzurite/pings/-/blob/master/README.md)
+        //window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
+    }
 
-
+    if (game.settings.get("always-centred",'mode',)=="pcs"){
     /*
     get list of tokens
-    check if owned by player
+    check if owned by players
     get token ids
      */
     let allchars = canvas.tokens.placeables;
@@ -145,7 +120,7 @@ Hooks.on('updateToken', async (scene, token, delta, diff, userId) => {
     //message the console
     console.debug('always-centred | x:'+Xmid+sidebarsize/2+'|y:'+Ymid+'zoom:'+zoom);
     //Pings module for debug only (https://gitlab.com/foundry-azzurite/pings/-/blob/master/README.md)
-    window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
+    //window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
     };
 
 
