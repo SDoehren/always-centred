@@ -1,4 +1,8 @@
-import { registerSettings } from './settings';
+console.log('always-centred | 1');
+import {registerSettings} from './settings.js';
+
+'use strict';
+
 console.log('always-centred | 1');
 /* ------------------------------------ */
 /* Initialize                           */
