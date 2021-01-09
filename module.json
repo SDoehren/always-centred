@@ -2,7 +2,7 @@
   "name": "always-centred",
   "title": "Always Centred",
   "description": "Always Centred is a module that automatically centres the camera on the players' tokens and zooms to fit them in.",
-  "version": "0.0.621",
+  "version": "0.0.622",
   "author": "SDoehren",
   "esmodules": [
     "always-centred.js"
