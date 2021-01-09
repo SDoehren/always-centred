@@ -1,7 +1,7 @@
 import { registerSettings } from './settings';
 console.log('always-centred | 1');
 /* ------------------------------------ */
-/* Initialize src                    */
+/* Initialize                           */
 /* ------------------------------------ */
 Hooks.once('init', async () => {
     console.log('always-centred | Initializing always-centred');
