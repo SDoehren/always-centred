@@ -1,7 +1,7 @@
 import { registerSettings } from './settings';
 console.log('always-centred | 1');
 /* ------------------------------------ */
-/* Initialize module                    */
+/* Initialize src                    */
 /* ------------------------------------ */
 Hooks.once('init', async () => {
     console.log('always-centred | Initializing always-centred');
@@ -48,7 +48,7 @@ Hooks.on('updateToken', async (scene, token, delta, diff, userId) => {
         let sidebarsize = 298/canvas.stage.scale.x
         canvas.animatePan({x:Xmid+sidebarsize/2,y:Ymid, duration: game.settings.get("always-centred",'updatespeed',)});
         console.debug('always-centred | x:'+token.x+sidebarsize/2+'|y:'+token.y);
-        //Pings module for debug only (https://gitlab.com/foundry-azzurite/pings/-/blob/master/README.md)
+        //Pings src for debug only (https://gitlab.com/foundry-azzurite/pings/-/blob/master/README.md)
         //window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
     }
 
@@ -119,7 +119,7 @@ Hooks.on('updateToken', async (scene, token, delta, diff, userId) => {
 
     //message the console
     console.debug('always-centred | x:'+Xmid+sidebarsize/2+'|y:'+Ymid+'zoom:'+zoom);
-    //Pings module for debug only (https://gitlab.com/foundry-azzurite/pings/-/blob/master/README.md)
+    //Pings src for debug only (https://gitlab.com/foundry-azzurite/pings/-/blob/master/README.md)
     //window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
     };
 
