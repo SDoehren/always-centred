@@ -1,9 +1,7 @@
-console.log('always-centred | 1');
 import {registerSettings} from './settings.js';
 
 'use strict';
 
-console.log('always-centred | 1');
 /* ------------------------------------ */
 /* Initialize                           */
 /* ------------------------------------ */
@@ -28,104 +26,137 @@ Hooks.on("ready", function() {
 });
 
 
-Hooks.on('updateToken', async (scene, token, delta, diff, userId) => {
-    console.log(game.settings.get("always-centred",'mode',))
-    //check setting is on
-    if (game.settings.get("always-centred",'mode',)=="disabled"){return;};
+function selectedtokenbox(token) {
+    let topleft = {x:token.x,y:token.y};
+    let bottomright = {x:token.x+token.width*canvas.grid.w,y:token.y+token.height*canvas.grid.h};
+    console.log(topleft,bottomright);
 
+    let boundingbox = {
+      topleft: topleft,
+      bottomright: bottomright,
+    };
 
-    if (game.settings.get("always-centred",'mode',)=="selectedtoken"){
+    return boundingbox
+};
 
-        /*
-        get list of tokens
-        check if selected by current player
-        get token ids
-         */
-        let controlled = canvas.tokens.controlled
-        let controlledids = controlled.map(c => c.id);
-
-        //if not selected by player exit early
-        if (!(controlledids.includes(token._id))){return;};
-
-        let Xmid = token.x+canvas.grid.w/2;
-        let Ymid = token.y+canvas.grid.h/2;
-        let sidebarsize = 298/canvas.stage.scale.x
-        canvas.animatePan({x:Xmid+sidebarsize/2,y:Ymid, duration: game.settings.get("always-centred",'updatespeed',)});
-        console.debug('always-centred | x:'+token.x+sidebarsize/2+'|y:'+token.y);
-        //Pings src for debug only (https://gitlab.com/foundry-azzurite/pings/-/blob/master/README.md)
-        //window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
-    }
-
-    if (game.settings.get("always-centred",'mode',)=="pcs"){
-    /*
-    get list of tokens
-    check if owned by players
-    get token ids
-     */
-    let allchars = canvas.tokens.placeables;
-    let PCs = allchars.filter(c => c.actor.hasPlayerOwner);
-    let PCids = PCs.map(c => c.actor.id);
-
-    //if not owned by player exit early
-    if (!(PCids.includes(token.actorId))){return;};
+function PCsbox(token) {
+    let PCs = canvas.tokens.ownedTokens;
 
     /*
     get list of tokens that did not move
     has to be done this way as the canvas.tokens.placeables will return the old postion of the token, token returns the target position
      */
-    PCs = PCs.filter(PC => PC.id != token._id);
+    let nonmovers = PCs.filter(PC => PC.id != token._id);
+    console.log(PCs);
+    //get list of Left and right x coordinates of the tokens and add the new location of the move token
+    let LeftXs = nonmovers.map(PC => PC.x);
+    LeftXs.push(token.x);
+    console.log(LeftXs);
 
-    //get list of x coordinates of left hand side of the tokens and add the new location of the move token
-    let Xs = PCs.map(PC => PC.x)
-    Xs.push(token.x);
+    let gridwidth = canvas.grid.w;
+    let RightXs = nonmovers.map(PC => PC.x+PC.w)
+    RightXs.push(token.x+token.width*gridwidth);
+    console.log(RightXs);
 
-    //get list of y coordinates of left hand side of the tokens and add the new location of the move token
-    let Ys = PCs.map(PC => PC.y)
-    Ys.push(token.y);
+    //get list of top and bottom y coordinates of the tokens and add the new location of the move token
+    let TopYs = nonmovers.map(PC => PC.y);
+    TopYs.push(token.y);
 
-    //get min,max and average x of tokens, canvas.grid.w assumes tokens are one grid space wide
-    let minXs = Math.min.apply(Math, Xs )
-    let maxXs = Math.max.apply(Math, Xs )
-    let Xmid = (minXs+maxXs+canvas.grid.w)/2;
+    let gridheight = canvas.grid.w;
+    let BottomYs = nonmovers.map(PC => PC.y+PC.h);
+    BottomYs.push(token.y+token.height*gridheight);
 
-    //get the view port width minus 298 to account for the sidebar
-    let visW = window.innerWidth-298
+    let minX = Math.min.apply(Math, LeftXs );
+    let maxX = Math.max.apply(Math, RightXs );
+    let minY = Math.min.apply(Math, TopYs );
+    let maxY = Math.max.apply(Math, BottomYs );
 
+    return {topleft: {x:minX,y:minY},bottomright: {x:maxX,y:maxY}};
+
+    return 1
+};
+
+
+Hooks.on('updateToken', async (scene, token, delta, diff, userId) => {
+    console.log(token);
+    //check setting is on
+    if (game.settings.get("always-centred",'mode',)=="disabled"){return;};
+    let boundingbox;
+
+    if (game.settings.get("always-centred",'mode',)=="selectedtoken"){
+        /*
+        get list of tokens
+        check if selected by current player
+        get token ids
+        */
+        let controlled = canvas.tokens.controlled;
+        let controlledids = controlled.map(c => c.id);
+
+        //if not selected by player exit early
+        if (!(controlledids.includes(token._id))){return;};
+
+        //otherwise get the box around the token
+        boundingbox = selectedtokenbox(token);
+
+    };
+
+    if (game.settings.get("always-centred",'mode',)=="pcs") {
+
+        //if not owned by player exit early
+        let PCs = canvas.tokens.ownedTokens;
+        let PCids = PCs.map(c => c.actor.id);
+        if (!(PCids.includes(token.actorId))) {return;};
+
+        boundingbox = PCsbox(token);
+    };
+
+    console.log(boundingbox);
+
+    //get the view port; minus 298 to account for the sidebar
+    let box = document.getElementById('sidebar');
+    let sidebarwidth = box.offsetWidth;
+    let visW = window.innerWidth-sidebarwidth;
+    let visH = window.innerHeight;
+
+    //calculate centre of the bounding box
     //calculate the zoom required to see all play controlled tokens
-    let zoomW = visW /(maxXs-minXs+canvas.grid.w)
+    let Xmid = (boundingbox.topleft.x+boundingbox.bottomright.x)/2;
+    let Ymid = (boundingbox.topleft.y+boundingbox.bottomright.y)/2;
 
-    //as above but for y
-    let minYs = Math.min.apply(Math, Ys )
-    let maxYs = Math.max.apply(Math, Ys )
-    let Ymid = (minYs+maxYs+canvas.grid.h)/2;
-    let visH = window.innerHeight
-    let zoomH = visH /(maxYs-minYs+canvas.grid.h)
+    // set default zoom to the current zoom level
+    let zoom = canvas.stage.scale.x;
 
-    //find the smaller (farthest away) of the 2 zooms
-    let zoom=1
-    if (zoomH<=zoomW){
-        zoom = zoomH
-    } else {
-        zoom = zoomW
+    if (game.settings.get("always-centred",'autozoom',)) {
+        //get box width
+        let boxwidth = (boundingbox.bottomright.x-boundingbox.topleft.x);
+        //add square padding to box width
+        let boxwidthperpadded = boxwidth*(1+game.settings.get("always-centred",'paddingper',)/100);
+        //add percentage padding to box width
+        let boxwidthpadded = (boxwidth+canvas.grid.w*game.settings.get("always-centred",'paddingsq',)*2);
+        //calculate the zoom based on the box+padding widths and the view port area
+        let zoomWperpadded = visW /boxwidthperpadded;
+        let zoomWpadded = visW /boxwidthpadded;
+
+        //repeat the above but for the height
+        let boxheight = (boundingbox.bottomright.y-boundingbox.topleft.y);
+        let boxheightperpadded = boxheight*(1+game.settings.get("always-centred",'paddingper',)/100);
+        let boxheightpadded = (boxheight+canvas.grid.w*game.settings.get("always-centred",'paddingsq',));
+        let zoomHperpadded = visH /boxheightperpadded;
+        let zoomHpadded = visH /boxheightpadded;
+
+        //find the smallest (farthest away) of the zooms
+        //if all the zooms are closer than the minimum, set to minimum
+        let zoomopts = [zoomWperpadded, zoomWpadded, zoomHperpadded, zoomHpadded, game.settings.get("always-centred", 'maxzoom',)];
+        zoom = Math.min.apply(Math, zoomopts);
     };
 
-    //move the camera back a third
-    zoom = zoom*0.66
-
-    //if the zoom is closer than the minimum, set to minimum
-    if (zoom>game.settings.get("always-centred",'maxzoom',)){
-        zoom = game.settings.get("always-centred",'maxzoom',)
-    };
-
-    let sidebarsize = 298/zoom
+    //the maths assumes the sidebar is half on the left and half on the right, this corrects for that.
+    let Xmidsidebaradjust = (sidebarwidth/zoom)/2
     //move camera
-    canvas.animatePan({x:Xmid+sidebarsize/2,y:Ymid,scale:zoom, duration: game.settings.get("always-centred",'updatespeed',)});
+    canvas.animatePan({x:Xmidsidebaradjust,y:Ymid,scale:zoom, duration: game.settings.get("always-centred",'updatespeed',)});
 
     //message the console
-    console.debug('always-centred | x:'+Xmid+sidebarsize/2+'|y:'+Ymid+'zoom:'+zoom);
+    console.debug('always-centred | x:'+(Xmid+sidebarsize/2)+'|y:'+Ymid+'zoom:'+zoom);
     //Pings src for debug only (https://gitlab.com/foundry-azzurite/pings/-/blob/master/README.md)
-    //window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
-    };
-
-
+    window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
 });
