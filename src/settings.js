@@ -6,7 +6,7 @@ export const registerSettings = function () {
 
     game.settings.register("always-centred", "mode", {
         name: "Mode:",
-        hint:"",
+        hint:"Disabled: Module off (default) | Player Characters: all player owned tokens | Selected Token: only the selected token.",
         scope: "client",
         config: true,
         default: "disabled",
@@ -16,7 +16,7 @@ export const registerSettings = function () {
 
     game.settings.register("always-centred", "autozoom", {
         name: "Auto Zoom",
-        hint:"",
+        hint:"Adjust zoom as well as position",
         scope: "client",
         config: true,
         default: true,
@@ -24,8 +24,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register("always-centred", "paddingsq", {
-        name: "Padding added in all directions",
-        hint:"",
+        name: "Padding (squares)",
+        hint:"Padding added to view area in all directions",
         scope: "client",
         config: true,
         default: 12,
@@ -33,8 +33,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register("always-centred", "paddingper", {
-        name: "paddingper",
-        hint:"",
+        name: "Padding (%)",
+        hint:"Percentage increase of view area",
         scope: "client",
         config: true,
         default: 33,
@@ -57,14 +57,5 @@ export const registerSettings = function () {
         config: true,
         default: 500,
         type: Number
-    });
-
-    game.settings.register("always-centred", "cleandisplay", {
-        name: "Remove Display Unneeded Elements",
-        hint:"",
-        scope: "client",
-        config: true,
-        default: false,
-        type: Boolean
     });
 };

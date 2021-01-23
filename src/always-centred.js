@@ -13,15 +13,6 @@ Hooks.once('init', async () => {
 
 
 Hooks.on("ready", function() {
-    if (game.settings.get("always-centred",'cleandisplay',)){
-        document.getElementById("navigation").remove();
-        document.getElementById("controls").remove();
-        document.getElementById("hotbar").remove();
-        document.getElementById("players").remove();
-        document.getElementById("chat-controls").remove();
-        document.getElementById("chat-form").remove();
-    };
-
   console.log('always-centred | Ready');
 });
 
@@ -40,7 +31,9 @@ function selectedtokenbox(token) {
 };
 
 function PCsbox(token) {
-    let PCs = canvas.tokens.ownedTokens;
+    //let PCs = canvas.tokens.ownedTokens;
+    let allchars = canvas.tokens.placeables;
+    let PCs = allchars.filter(c => c.actor.hasPlayerOwner);
 
     /*
     get list of tokens that did not move
@@ -98,14 +91,14 @@ Hooks.on('updateToken', async (scene, token, delta, diff, userId) => {
         //otherwise get the box around the token
         boundingbox = selectedtokenbox(token);
 
-    };
-
-    if (game.settings.get("always-centred",'mode',)=="pcs") {
+    } else if (game.settings.get("always-centred",'mode',)=="pcs") {
 
         //if not owned by player exit early
-        let PCs = canvas.tokens.ownedTokens;
+        let allchars = canvas.tokens.placeables;
+        let PCs = allchars.filter(c => c.actor.hasPlayerOwner);
         let PCids = PCs.map(c => c.actor.id);
-        if (!(PCids.includes(token.actorId))) {return;};
+        if (!(PCids.includes(token.actorId))) {
+            return;}
 
         boundingbox = PCsbox(token);
     };
@@ -113,8 +106,8 @@ Hooks.on('updateToken', async (scene, token, delta, diff, userId) => {
     console.log(boundingbox);
 
     //get the view port; minus 298 to account for the sidebar
-    let box = document.getElementById('sidebar');
-    let sidebarwidth = box.offsetWidth;
+    let sidebar = document.getElementById('sidebar');
+    let sidebarwidth = sidebar.offsetWidth;
     let visW = window.innerWidth-sidebarwidth;
     let visH = window.innerHeight;
 
@@ -151,12 +144,12 @@ Hooks.on('updateToken', async (scene, token, delta, diff, userId) => {
     };
 
     //the maths assumes the sidebar is half on the left and half on the right, this corrects for that.
-    let Xmidsidebaradjust = (sidebarwidth/zoom)/2
+    let Xmidsidebaradjust = Xmid+(sidebarwidth/zoom)/2
     //move camera
     canvas.animatePan({x:Xmidsidebaradjust,y:Ymid,scale:zoom, duration: game.settings.get("always-centred",'updatespeed',)});
 
     //message the console
-    console.debug('always-centred | x:'+(Xmid+sidebarsize/2)+'|y:'+Ymid+'zoom:'+zoom);
+    console.debug('always-centred | x:'+Xmidsidebaradjust+'|y:'+Ymid+'|zoom:'+zoom);
     //Pings src for debug only (https://gitlab.com/foundry-azzurite/pings/-/blob/master/README.md)
-    window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
+    //window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
 });
