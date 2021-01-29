@@ -41,7 +41,7 @@ Setting 0.2: 5 pixel on tabletop=1 pixel in view
 
 ## Known issues
 
-- Minor conflict with multilevel tokens: only occurs when quickly moving into a portal that teleports between scenes
+- Minor conflict with multilevel tokens; currently mitigated entirely.  Always centred will not work if a token moves inside an MLT object.
 - Anonymous tokens will cause a failure on 
 
 ## Change log

@@ -189,8 +189,6 @@ Hooks.on('updateToken', async (scene, token, delta, diff) => {
         return;
     }
 
-
-
     //check for collision with multilevel token
 
     let boundingbox;
@@ -239,9 +237,6 @@ Hooks.on('updateToken', async (scene, token, delta, diff) => {
     //check collision with MLT
     if (checkMLT(token) & !(checkMLT(oldposition))) {
         panandzoom(boundingbox,0)
-    } else if (checkMLT(oldposition)) {
-        let ps = Math.min(game.settings.get("always-centred", 'updatespeed',),100)
-        panandzoom(boundingbox,ps)
     } else {
         panandzoom(boundingbox)
     }
