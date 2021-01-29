@@ -1,12 +1,16 @@
 # Always Centred
 
+[![Github all releases](https://img.shields.io/github/downloads/sdoehren/always-centred/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
+[![GitHub issues](https://img.shields.io/github/issues/sdoehren/always-centred.svg)](https://GitHub.com/sdoehren/always-centred/issues/)
+[![GitHub release](https://img.shields.io/github/release/sdoehren/always-centred.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
+
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/sdoehren)
 
 Always Centred continuously centres and zooms the view on player owned characters or the currently selected token.
 
 
 ## Instructions
-set "Centre View Continuously?" to on, the rest should be automatic.
+Set "Mode" to Player Characters or Selected Token, the rest should be automatic.
 
 ## Settings
 
@@ -33,3 +37,12 @@ Setting 3: 1 pixel on tabletop=3 pixel in view
 Setting 0.2: 5 pixel on tabletop=1 pixel in view  
 
 - Camera animation speed : Speed at which the camera recentres (default: 500ms; 0=instant)
+
+## Change log
+
+#### 0.2.0 - DM Controls
+- General code improvements
+- Added controls to allow DM to control all players centring.
+
+#### 0.1.0 - First Beta Release  
+This was the first public beta.

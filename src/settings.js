@@ -58,4 +58,14 @@ export const registerSettings = function () {
         default: 500,
         type: Number
     });
+
+    game.settings.register("always-centred", "DMControl", {
+        name: "DM Control all?",
+        hint:"Allows the DM to control player centring",
+        scope: "world",
+        config: false,
+        default: 500,
+        type: Boolean
+    });
+
 };
