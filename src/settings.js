@@ -6,7 +6,7 @@ export const registerSettings = function () {
 
     game.settings.register("always-centred", "mode", {
         name: "Mode:",
-        hint:"Disabled: Module off (default) | Player Characters: all player owned tokens | Selected Token: only the selected token.",
+        hint:"Disabled: Module off (default) | Party View: all player owned tokens | Selected Token: only the selected token.",
         scope: "client",
         config: true,
         default: "disabled",

@@ -16,7 +16,7 @@ Set "Mode" to Player Characters or Selected Token, the rest should be automatic.
 
 - Mode: (default: Disabled)  
 Disabled: Module off  
-Player Characters: Will zoom and centre to include all **player owned** tokens.  
+Party View: Will zoom and centre to include all **player owned** tokens.  
 Selected Token:  Will zoom and centre to include only the selected token.  
 
 "Selected Token" can work when multiple tokens are selected but it will only focus on one at a time and may lead to the camera bouncing.
@@ -41,12 +41,13 @@ Setting 0.2: 5 pixel on tabletop=1 pixel in view
 
 ## Known issues
 
-- Minor conflict with multilevel tokens; currently mitigated entirely.  Always centred will not work if a token moves inside an MLT object.
-- Anonymous tokens will cause a failure on 
+- Minor conflict with multilevel tokens; currently mitigated entirely.  Always centred will not work if a token moves inside an MLT object. (Fix planned)
+- Anonymous tokens will cause issues. (Fix planned)
+- When in Party View mode and auto zoom is off, if the tokens are too spread to fit in view, bouncing will occur. (Fix planned)
 
 ## Change log
 
-### 0.1.1 - Hot Fix
+### 0.1.1 - Bug Fix
 
 - Vastly reduced conflict with multilevel tokens
 - Player Characters mode renamed Party View
