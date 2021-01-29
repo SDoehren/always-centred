@@ -50,7 +50,7 @@ function SettingsChange(mode) {
 
     let modetext = {
         disabled:"disabled",
-        pcs:"Player Characters",
+        pcs:"Party View",
         selectedtoken:"Selected Token"
     };
 
@@ -61,6 +61,7 @@ function SettingsChange(mode) {
     }
 }
 
+/*
 Hooks.on("getSceneControlButtons", (controls) => {
   const bar = controls.find((c) => c.name === "token");
   bar.tools.push({
@@ -81,7 +82,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
   });
   bar.tools.push({
     name: "always-centred-centrePCs",
-    title: "Centre PCs",
+    title: "Centre Party View",
     icon: "far fa-object-group",
       onClick: () => SettingsChange("pcs"),
     button: true,
@@ -94,7 +95,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
     button: true,
   });
 });
-
+*/
 
 
 function selectedtokenbox(token) {
@@ -184,8 +185,7 @@ Hooks.on('updateToken', async (scene, token, delta, diff) => {
     let movervel = mover._velocity
     let oldposition = {x:token.x-movervel.dx,y:token.y-movervel.dy,width:token.width,height:token.height}
 
-    //check collision with MLT
-    if (checkMLT(token) & !(checkMLT(oldposition))) {
+    if (checkMLT(token) & (checkMLT(oldposition))) {
         return;
     }
 
@@ -236,12 +236,14 @@ Hooks.on('updateToken', async (scene, token, delta, diff) => {
         game.socket.emit('module.always-centred', {boundingbox:boundingbox});
     }
 
-
-    if (checkMLT(oldposition)) {
+    //check collision with MLT
+    if (checkMLT(token) & !(checkMLT(oldposition))) {
+        panandzoom(boundingbox,0)
+    } else if (checkMLT(oldposition)) {
         let ps = Math.min(game.settings.get("always-centred", 'updatespeed',),100)
-        await panandzoom(boundingbox,ps)
+        panandzoom(boundingbox,ps)
     } else {
-        await panandzoom(boundingbox)
+        panandzoom(boundingbox)
     }
 })
 
@@ -294,7 +296,7 @@ async function panandzoom(boundingbox, panspeed){
     //move camera
 
     if (panspeed===undefined) {
-        await canvas.animatePan({
+        canvas.animatePan({
             x: Xmidsidebaradjust,
             y: Ymid,
             scale: zoom,
@@ -304,7 +306,7 @@ async function panandzoom(boundingbox, panspeed){
 
 
     } else {
-        await canvas.animatePan({
+        canvas.animatePan({
             x: Xmidsidebaradjust,
             y: Ymid,
             scale: zoom,

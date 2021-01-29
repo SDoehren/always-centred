@@ -38,11 +38,18 @@ Setting 0.2: 5 pixel on tabletop=1 pixel in view
 
 - Camera animation speed : Speed at which the camera recentres (default: 500ms; 0=instant)
 
+
+## Known issues
+
+- Minor conflict with multilevel tokens: only occurs when quickly moving into a portal that teleports between scenes
+- Anonymous tokens will cause a failure on 
+
 ## Change log
 
-#### 0.2.0 - DM Controls
-- General code improvements
-- Added controls to allow DM to control all players centring.
+### 0.1.1 - Hot Fix
+
+- Vastly reduced conflict with multilevel tokens
+- Player Characters mode renamed Party View
 
 #### 0.1.0 - First Beta Release  
 This was the first public beta.

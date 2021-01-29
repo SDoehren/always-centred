@@ -11,7 +11,7 @@ export const registerSettings = function () {
         config: true,
         default: "disabled",
         type: String,
-        choices: {disabled: "Disabled", pcs: "Player Characters", selectedtoken: "Selected Token"},
+        choices: {disabled: "Disabled", pcs: "Party View", selectedtoken: "Selected Token"},
     });
 
     game.settings.register("always-centred", "autozoom", {
