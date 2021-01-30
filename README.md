@@ -51,6 +51,8 @@ Setting 0.2: 5 pixel on tabletop=1 pixel in view
 
 ## Change log
 
+### 0.1.3 - Hot Fix2
+
 ### 0.1.2 - Hot Fix
 - sum users reported recieving DM control notifications
 

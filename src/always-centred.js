@@ -12,7 +12,7 @@ import {registerSettings} from './settings.js';
 Hooks.once('init', async () => {
     console.log('always-centred | Initializing always-centred');
     registerSettings();
-
+    game.settings.set("always-centred",'DMControl',false);
 });
 
 

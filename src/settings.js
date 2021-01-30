@@ -64,7 +64,7 @@ export const registerSettings = function () {
         hint:"Allows the DM to control player centring",
         scope: "world",
         config: false,
-        default: 500,
+        default: false,
         type: Boolean
     });
 
