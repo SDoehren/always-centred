@@ -12,7 +12,7 @@ import {registerSettings} from './settings.js';
 Hooks.once('init', async () => {
     console.log('always-centred | Initializing always-centred');
     registerSettings();
-    game.settings.set("always-centred",'DMControl',false);
+
 });
 
 
@@ -32,6 +32,8 @@ Hooks.on("ready", () => {
         ui.notifications.info("The DM has control of the player screen centring.");
     }
     */
+
+    if (game.user.isGM){game.settings.set("always-centred",'DMControl',false);}
 });
 
 
