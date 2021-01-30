@@ -1,8 +1,12 @@
 # Always Centred
 
-[![Github all releases](https://img.shields.io/github/downloads/sdoehren/always-centred/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
-[![GitHub issues](https://img.shields.io/github/issues/sdoehren/always-centred.svg)](https://GitHub.com/sdoehren/always-centred/issues/)
 [![GitHub release](https://img.shields.io/github/release/sdoehren/always-centred.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
+
+[![Github all releases](https://img.shields.io/github/downloads/sdoehren/always-centred/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
+[![Github Releases (by Release)](https://img.shields.io/github/downloads/sdoehren/always-centred/v0.1.1/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
+
+[![GitHub issues](https://img.shields.io/github/issues/sdoehren/always-centred.svg)](https://GitHub.com/sdoehren/always-centred/issues/)
+ 
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/sdoehren)
 
@@ -28,7 +32,7 @@ Whether the camera will move towards and away from the board as needed.
 The number squares added to the box around the targets.
 
 - Padding (%): (default: 33)  
-The percentage to  add to the box around the targets.
+The percentage to  add to the box around the targets. 
 
 - Max zoom level:  Ignored if Auto Zoom disabled (default: 1, max:3) 
 Maximum tightness to the tabletop; high number tokens appear bigger, low number tokens appear smaller.  

@@ -21,7 +21,8 @@ Hooks.on("ready", () => {
   console.log('always-centred | Ready');
 
   console.log("always-centred | Listener")
-  game.socket.on('module.always-centred', (data) => DMControl(data));
+  /*game.socket.on('module.always-centred', (data) => DMControl(data));
+
 
   if ((game.settings.get("always-centred",'DMControl')) & !(game.user.isGM)){
         ui.notifications.info("The DM has control of your screen centring.");
@@ -30,7 +31,7 @@ Hooks.on("ready", () => {
   if ((game.settings.get("always-centred",'DMControl')) & (game.user.isGM)){
         ui.notifications.info("The DM has control of the player screen centring.");
     }
-
+    */
 });
 
 
@@ -39,10 +40,11 @@ function DMGlobalControl() {
     let elactive = !(els[0].className.includes("active"));
     game.settings.set("always-centred",'DMControl',elactive);
 
+    /*
     if (elactive){
         game.socket.emit('module.always-centred', {infonote:"The DM has taken control of your screen centring."});
         ui.notifications.info("The DM has control");
-    }
+    }*/
 }
 
 function SettingsChange(mode) {
@@ -56,9 +58,10 @@ function SettingsChange(mode) {
 
     ui.notifications.info("Always Centred | Mode set to '"+modetext[mode]+"'.");
 
+    /*
     if ((game.settings.get("always-centred",'DMControl')) & !(game.user.isGM)){
         ui.notifications.info("The DM has control of your screen centring.");
-    }
+    }*/
 }
 
 /*
