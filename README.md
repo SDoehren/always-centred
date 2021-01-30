@@ -3,7 +3,7 @@
 [![GitHub release](https://img.shields.io/github/release/sdoehren/always-centred.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
 
 [![Github all releases](https://img.shields.io/github/downloads/sdoehren/always-centred/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
-[![Github Releases (by Release)](https://img.shields.io/github/downloads/sdoehren/always-centred/v0.1.1/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
+[![Github Releases (by Release)](https://img.shields.io/github/downloads/sdoehren/always-centred/v0.1.2/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
 
 [![GitHub issues](https://img.shields.io/github/issues/sdoehren/always-centred.svg)](https://GitHub.com/sdoehren/always-centred/issues/)
  
@@ -50,6 +50,9 @@ Setting 0.2: 5 pixel on tabletop=1 pixel in view
 - When in Party View mode and auto zoom is off, if the tokens are too spread to fit in view, bouncing will occur. (Fix planned)
 
 ## Change log
+
+### 0.1.2 - Hot Fix
+- sum users reported recieving DM control notifications
 
 ### 0.1.1 - Bug Fix
 

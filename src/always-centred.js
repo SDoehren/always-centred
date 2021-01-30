@@ -213,7 +213,6 @@ Hooks.on('updateToken', async (scene, token, delta, diff) => {
         if (!(controlledids.includes(token._id))) {
             return;
         }
-        ;
 
         //otherwise get the box around the token
         boundingbox = selectedtokenbox(token);
