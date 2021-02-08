@@ -1,53 +1,36 @@
 import {registerSettings} from './settings.js';
+import {DMGlobalControl, DMControl} from './dmcontrols.js';
+import {selectedtokenbox, PCsbox} from './boxfinder.js';
+
 
 'use strict';
-
-/* ------------------------------------ */
-/* Initialize                           */
-/* ------------------------------------ */
-
-
 
 
 Hooks.once('init', async () => {
     console.log('always-centred | Initializing always-centred');
     registerSettings();
-
 });
 
-
-
 Hooks.on("ready", () => {
-  console.log('always-centred | Ready');
+    console.log('always-centred | Ready');
 
-  console.log("always-centred | Listener")
-  /*game.socket.on('module.always-centred', (data) => DMControl(data));
+    console.log("always-centred | Listener")
+    game.socket.on('module.always-centred', (data) => DMControl(data));
 
 
-  if ((game.settings.get("always-centred",'DMControl')) & !(game.user.isGM)){
+    if ((game.settings.get("always-centred",'DMControl')) & !(game.user.isGM)){
         ui.notifications.info("The DM has control of your screen centring.");
     }
 
-  if ((game.settings.get("always-centred",'DMControl')) & (game.user.isGM)){
+    if ((game.settings.get("always-centred",'DMControl')) & (game.user.isGM)){
         ui.notifications.info("The DM has control of the player screen centring.");
     }
-    */
 
-    if (game.user.isGM){game.settings.set("always-centred",'DMControl',false);}
+
+    if (game.user.isGM){
+        game.settings.set("always-centred",'DMControl',false);
+    }
 });
-
-
-function DMGlobalControl() {
-    let els = document.querySelectorAll("[data-tool='always-centred-dmcontrol']");
-    let elactive = !(els[0].className.includes("active"));
-    game.settings.set("always-centred",'DMControl',elactive);
-
-    /*
-    if (elactive){
-        game.socket.emit('module.always-centred', {infonote:"The DM has taken control of your screen centring."});
-        ui.notifications.info("The DM has control");
-    }*/
-}
 
 function SettingsChange(mode) {
     game.settings.set("always-centred",'mode',mode);
@@ -60,13 +43,12 @@ function SettingsChange(mode) {
 
     ui.notifications.info("Always Centred | Mode set to '"+modetext[mode]+"'.");
 
-    /*
+
     if ((game.settings.get("always-centred",'DMControl')) & !(game.user.isGM)){
         ui.notifications.info("The DM has control of your screen centring.");
-    }*/
+    }
 }
 
-/*
 Hooks.on("getSceneControlButtons", (controls) => {
   const bar = controls.find((c) => c.name === "token");
   bar.tools.push({
@@ -100,64 +82,6 @@ Hooks.on("getSceneControlButtons", (controls) => {
     button: true,
   });
 });
-*/
-
-
-function selectedtokenbox(token) {
-    let topleft = {x:token.x,y:token.y};
-    let bottomright = {x:token.x+token.width*canvas.grid.w,y:token.y+token.height*canvas.grid.h};
-
-    let boundingbox = {
-      topleft: topleft,
-      bottomright: bottomright,
-    };
-
-    return boundingbox
-};
-
-function PCsbox(token) {
-    //let PCs = canvas.tokens.ownedTokens;
-    let allchars = canvas.tokens.placeables;
-    let PCs = allchars.filter(c => c.actor.hasPlayerOwner);
-
-    /*
-    get list of tokens that did not move
-    has to be done this way as the canvas.tokens.placeables will return the old postion of the token, token returns the target position
-     */
-    let nonmovers = PCs.filter(PC => PC.id != token._id);
-    //console.log(PCs);
-    //get list of Left and right x coordinates of the tokens and add the new location of the move token
-    let LeftXs = nonmovers.map(PC => PC.x);
-    LeftXs.push(token.x);
-
-    let gridwidth = canvas.grid.w;
-    let RightXs = nonmovers.map(PC => PC.x+PC.w)
-    RightXs.push(token.x+token.width*gridwidth);
-
-    //get list of top and bottom y coordinates of the tokens and add the new location of the move token
-    let TopYs = nonmovers.map(PC => PC.y);
-    TopYs.push(token.y);
-
-    let gridheight = canvas.grid.h;
-    let BottomYs = nonmovers.map(PC => PC.y+PC.h);
-    BottomYs.push(token.y+token.height*gridheight);
-
-    let minX = Math.min.apply(Math, LeftXs );
-    let maxX = Math.max.apply(Math, RightXs );
-    let minY = Math.min.apply(Math, TopYs );
-    let maxY = Math.max.apply(Math, BottomYs );
-
-    return {topleft: {x:minX,y:minY},bottomright: {x:maxX,y:maxY}};
-}
-
-
-function DMControl(data){
-
-  if ('infonote' in data){
-       ui.notifications.info(data.infonote);
-  }
-}
-
 
 function checkMLT(token){
     if (game.modules.get("multilevel-tokens") === undefined){
@@ -179,94 +103,93 @@ function checkMLT(token){
     return MLTsum !== 0
 }
 
-
-Hooks.on('updateToken', async (scene, token, delta, diff) => {
-    //check setting is on
-    if (game.settings.get("always-centred", 'mode',) === "disabled") {
-        return;
-    }
-
-    let mover = canvas.tokens.placeables.filter(PC => PC.id == token._id)[0];
-    let movervel = mover._velocity
-    let oldposition = {x:token.x-movervel.dx,y:token.y-movervel.dy,width:token.width,height:token.height}
-
-    if (checkMLT(token) & (checkMLT(oldposition))) {
-        return;
-    }
-
-    //check for collision with multilevel token
-
+function getboundingbox(token){
     let boundingbox;
-
-    if (!(game.user.isGM) & game.settings.get("always-centred",'DMControl')) {
-        //socket message will come.
-        return;
-
-    } else if (game.settings.get("always-centred", 'mode',) === "selectedtoken") {
-        /*
-        get list of tokens
-        check if selected by current player
-        get token ids
-        */
-        let controlled = canvas.tokens.controlled;
-        let controlledids = controlled.map(c => c.id);
-
-        //if not selected by player exit early
-        if (!(controlledids.includes(token._id))) {
-            return;
-        }
+    if (game.settings.get("always-centred", 'mode',) === "selectedtoken") {
+        //get list of controlled tokens ids; if not selected by player exit early
+        let controlledids = canvas.tokens.controlled.map(c => c.id);
+        if (!(controlledids.includes(token._id))) {return;}
 
         //otherwise get the box around the token
         boundingbox = selectedtokenbox(token);
 
     } else if (game.settings.get("always-centred", 'mode',) === "pcs") {
 
-        //if not owned by player exit early
+        //if token not owned by player exit early
         let allchars = canvas.tokens.placeables;
         let PCs = allchars.filter(c => c.actor.hasPlayerOwner);
         let PCids = PCs.map(c => c.actor.id);
-        if (!(PCids.includes(token.actorId))) {
-            return;
-        }
+
+        if (!(PCids.includes(token.actorId))) {return;}
 
         boundingbox = PCsbox(token);
     }
 
-    if (game.user.isGM & game.settings.get("always-centred",'DMControl')) {
+    return boundingbox;
+}
 
-        console.log("always-centred | boundingbox emitted");
-        game.socket.emit('module.always-centred', {boundingbox:boundingbox});
+
+
+
+Hooks.on('updateToken', async (scene, token, delta, diff) => {
+    //check setting is on
+    if (game.settings.get("always-centred", 'mode',) === "disabled") {return;}
+
+    let mover = canvas.tokens.placeables.filter(PC => PC.id == token._id)[0];
+    let movervel = mover._velocity
+    let oldposition = {x:token.x-movervel.dx,y:token.y-movervel.dy,width:token.width,height:token.height}
+
+    if (checkMLT(token) & (checkMLT(oldposition))) {return;}
+
+
+
+    if (!(game.user.isGM) & game.settings.get("always-centred",'DMControl')) {
+        //socket message will come.
+        return;
     }
 
+    let boundingbox = getboundingbox(token);
+
+    let zoom = calculatezoom(boundingbox);
+
+    let panspeed;
     //check collision with MLT
     if (checkMLT(token) & !(checkMLT(oldposition))) {
-        panandzoom(boundingbox,0)
-    } else {
-        panandzoom(boundingbox)
+        panspeed = 0
     }
+
+
+    if (game.user.isGM & game.settings.get("always-centred", 'DMControl')) {
+        console.log("always-centred | boundingbox emitted");
+        game.socket.emit('module.always-centred', {boundingbox: boundingbox, zoom: zoom, panspeed: panspeed});
+    }
+    panandzoom(boundingbox, panspeed, zoom)
+
 })
 
-async function panandzoom(boundingbox, panspeed){
-
-    console.log('always-centred | boundingbox');
-    console.log(boundingbox);
-    console.log(panspeed);
-
+function calculatezoom(boundingbox){
     //get the view port; minus 298 to account for the sidebar
     let sidebar = document.getElementById('sidebar');
     let sidebarwidth = sidebar.offsetWidth;
     let visW = window.innerWidth-sidebarwidth;
     let visH = window.innerHeight;
 
-    //calculate centre of the bounding box
-    //calculate the zoom required to see all play controlled tokens
-    let Xmid = (boundingbox.topleft.x+boundingbox.bottomright.x)/2;
-    let Ymid = (boundingbox.topleft.y+boundingbox.bottomright.y)/2;
-
     // set default zoom to the current zoom level
     let zoom = canvas.stage.scale.x;
 
-    if (game.settings.get("always-centred",'autozoom',)) {
+    let nonfit = false;
+
+    if (!(game.settings.get("always-centred",'autozoom',))  & game.settings.get("always-centred",'mitigatebounce',)) {
+        let bareminimumx = (window.innerWidth - document.getElementById('sidebar').offsetWidth) / ((boundingbox.bottomright.x - boundingbox.topleft.x) + canvas.grid.w*2.5);
+        let bareminimumy = window.innerHeight / ((boundingbox.bottomright.y - boundingbox.topleft.y) + canvas.grid.h*2.5);
+        if ((canvas.stage.scale.x > bareminimumx) || (canvas.stage.scale.x > bareminimumy)) {
+            ui.notifications.info("Always Centred | Tokens do not fit - auto zooming");
+            nonfit = true;
+        }
+    }
+
+
+    if (game.settings.get("always-centred",'autozoom',) || (nonfit & game.settings.get("always-centred",'mitigatebounce',))) {
         //get box width
         let boxwidth = (boundingbox.bottomright.x-boundingbox.topleft.x);
         //add square padding to box width
@@ -280,19 +203,56 @@ async function panandzoom(boundingbox, panspeed){
         //repeat the above but for the height
         let boxheight = (boundingbox.bottomright.y-boundingbox.topleft.y);
         let boxheightperpadded = boxheight*(1+game.settings.get("always-centred",'paddingper',)/100);
-        let boxheightpadded = (boxheight+canvas.grid.w*game.settings.get("always-centred",'paddingsq',));
+        let boxheightpadded = (boxheight+canvas.grid.w*game.settings.get("always-centred",'paddingsq',)*2);
         let zoomHperpadded = visH /boxheightperpadded;
         let zoomHpadded = visH /boxheightpadded;
 
+        //this pad prevents nudging of the screen
+        let boxwidthforcedpadded = (boxwidth+canvas.grid.w*2+150/zoom);
+        let boxheightforcedpadded = (boxheight+canvas.grid.h*2+150/zoom);
+
+        if (nonfit & game.settings.get("always-centred",'mitigatebounce',)){
+            boxwidthforcedpadded = (boxwidth+canvas.grid.w*5);
+            boxheightforcedpadded = (boxheight+canvas.grid.h*5);
+        }
+
+
+        let zoomWforcedpadded = visW /boxwidthforcedpadded;
+        let zoomHforcedpadded = visH /boxheightforcedpadded;
+
         //find the smallest (farthest away) of the zooms
         //if all the zooms are closer than the minimum, set to minimum
-        let zoomopts = [zoomWperpadded, zoomWpadded, zoomHperpadded, zoomHpadded, game.settings.get("always-centred", 'maxzoom',)];
+        let zoomopts = [zoomWforcedpadded,zoomHforcedpadded,zoomWperpadded, zoomWpadded, zoomHperpadded, zoomHpadded, game.settings.get("always-centred", 'maxzoom',)];
         zoom = Math.min.apply(Math, zoomopts);
-    };
+    }
+
+    return zoom
+}
+
+async function panandzoom(boundingbox, panspeed,zoom){
+
+    if (game.settings.get("always-centred",'Debug',)){console.log('always-centred | boundingbox');};
+    if (game.settings.get("always-centred",'Debug',)){console.log(boundingbox);};
+
+    //get the view port; minus 298 to account for the sidebar
+    let sidebar = document.getElementById('sidebar');
+    let sidebarwidth = sidebar.offsetWidth;
+
+    //calculate centre of the bounding box
+    //calculate the zoom required to see all play controlled tokens
+    let Xmid = (boundingbox.topleft.x+boundingbox.bottomright.x)/2;
+    let Ymid = (boundingbox.topleft.y+boundingbox.bottomright.y)/2;
+
 
     //the maths assumes the sidebar is half on the left and half on the right, this corrects for that.
     let Xmidsidebaradjust = Xmid+(sidebarwidth/zoom)/2
+
     //move camera
+
+    if (zoom===undefined) {
+        // set default zoom to the current zoom level
+        zoom = canvas.stage.scale.x;
+    }
 
     if (panspeed===undefined) {
         canvas.animatePan({
@@ -301,8 +261,9 @@ async function panandzoom(boundingbox, panspeed){
             scale: zoom,
             duration: game.settings.get("always-centred", 'updatespeed',)
         });
-        console.debug('always-centred | x:' + Xmidsidebaradjust + '|y:' + Ymid + '| zoom:' + zoom + ' | speed:'+game.settings.get("always-centred", 'updatespeed',));
-
+        if (game.settings.get("always-centred",'Debug',)){
+        console.log('always-centred | panspeed===undefined x:' + Xmidsidebaradjust + '|y:' + Ymid + '| zoom:' + zoom + ' | speed:'+game.settings.get("always-centred", 'updatespeed',));
+        };
 
     } else {
         canvas.animatePan({
@@ -311,9 +272,12 @@ async function panandzoom(boundingbox, panspeed){
             scale: zoom,
             duration: panspeed
         });
-        console.debug('always-centred | x:' + Xmidsidebaradjust + ' | y:' + Ymid + '| zoom:' + zoom + ' | speed:'+panspeed);
+        if (game.settings.get("always-centred",'Debug',)){
+        console.log('always-centred | panspeed!==undefined x:' + Xmidsidebaradjust + ' | y:' + Ymid + '| zoom:' + zoom + ' | speed:'+panspeed);
+        };
+
     }
 
     //Pings src for debug only (https://gitlab.com/foundry-azzurite/pings/-/blob/master/README.md)
-    //window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
+    window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
 }

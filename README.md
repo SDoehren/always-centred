@@ -5,6 +5,7 @@
 [![Github all releases](https://img.shields.io/github/downloads/sdoehren/always-centred/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
 [![Github Releases (by Release)](https://img.shields.io/github/downloads/sdoehren/always-centred/v0.1.4/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
 
+
 [![GitHub issues](https://img.shields.io/github/issues/sdoehren/always-centred.svg)](https://GitHub.com/sdoehren/always-centred/issues/)
  
 
@@ -14,7 +15,7 @@ Always Centred continuously centres and zooms the view on player owned character
 
 
 ## Instructions
-Set "Mode" to Player Characters or Selected Token, the rest should be automatic.
+Set "Mode" to Party View or Selected Token, the rest should be automatic.
 
 ## Settings
 
@@ -45,16 +46,22 @@ Setting 0.2: 5 pixel on tabletop=1 pixel in view
 
 ## Known issues
 
-- Minor conflict with multilevel tokens; currently mitigated entirely.  Always centred will not work if a token moves inside an MLT object. (Fix planned)
+- Minor conflict with multilevel tokens; currently mitigated entirely.  Always centred will not centre if a token moves inside an MLT object. (Fix planned)
 - Anonymous tokens will cause issues. (Fix planned)
 - When in Party View mode and auto zoom is off, if the tokens are too spread to fit in view, bouncing will occur. (Fix planned)
 
 ## Change log
 
+### 0.2.0 - DM controls
+- General code improvements
+- Added controls to allow DM to control all players' centring.
+- Quick change buttons added to scene controls
+- Issue with Party View mode and auto zoom being off partially mitigated.
+
 ### 0.1.3 - Hot Fix2
 
 ### 0.1.2 - Hot Fix
-- sum users reported recieving DM control notifications
+- some users reported recieving DM control notifications
 
 ### 0.1.1 - Bug Fix
 

@@ -16,8 +16,17 @@ export const registerSettings = function () {
 
     game.settings.register("always-centred", "autozoom", {
         name: "Auto Zoom",
-        hint:"Adjust zoom as well as position",
+        hint:"Adjust zoom as well as position. Highly Recommended.",
         scope: "client",
+        config: true,
+        default: true,
+        type: Boolean
+    });
+
+    game.settings.register("always-centred", "mitigatebounce", {
+        name: "Mitigate Bouncing Issue",
+        hint:"Only relevant when Auto Zoom is set to off and Mode is Party View. Forces Auto Zoom when required.",
+        scope: "world",
         config: true,
         default: true,
         type: Boolean
@@ -25,7 +34,7 @@ export const registerSettings = function () {
 
     game.settings.register("always-centred", "paddingsq", {
         name: "Padding (squares)",
-        hint:"Padding added to view area in all directions",
+        hint:"Padding added to view area in all directions. Highly Recommended to be set to >2 and will have no effect <1.",
         scope: "client",
         config: true,
         default: 12,
@@ -58,6 +67,16 @@ export const registerSettings = function () {
         default: 500,
         type: Number
     });
+
+    game.settings.register("always-centred", "Debug", {
+        name: "Debug",
+        hint:"",
+        scope: "client",
+        config: true,
+        default: true,
+        type: Boolean
+    });
+
 
     game.settings.register("always-centred", "DMControl", {
         name: "DM Control all?",
