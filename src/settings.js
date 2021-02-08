@@ -68,6 +68,15 @@ export const registerSettings = function () {
         type: Number
     });
 
+    game.settings.register("always-centred", "includeinvisible", {
+        name: "Include Invisible",
+        hint: "Whether to account for tokens that can't be seen by the user in the party view calculations.",
+        scope: "world",
+        config: true,
+        default: false,
+        type: Boolean
+    });
+
     game.settings.register("always-centred", "Debug", {
         name: "Debug",
         hint:"",
@@ -86,5 +95,6 @@ export const registerSettings = function () {
         default: false,
         type: Boolean
     });
+
 
 };

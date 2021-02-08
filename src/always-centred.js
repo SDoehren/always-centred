@@ -1,10 +1,21 @@
 import {registerSettings} from './settings.js';
-import {DMGlobalControl, DMControl} from './dmcontrols.js';
+import {DMGlobalControl} from './dmcontrols.js';
 import {selectedtokenbox, PCsbox} from './boxfinder.js';
 
 
 'use strict';
 
+function DMControl(data){
+    console.log(data);
+    if ('infonote' in data){
+       ui.notifications.info(data.infonote);
+    }
+
+    if ('boundingbox' in data){
+        panandzoom(data.boundingbox,data.panspeed,data.zoom)
+    }
+
+}
 
 Hooks.once('init', async () => {
     console.log('always-centred | Initializing always-centred');
@@ -31,6 +42,9 @@ Hooks.on("ready", () => {
         game.settings.set("always-centred",'DMControl',false);
     }
 });
+
+
+
 
 function SettingsChange(mode) {
     game.settings.set("always-centred",'mode',mode);
@@ -149,6 +163,7 @@ Hooks.on('updateToken', async (scene, token, delta, diff) => {
     }
 
     let boundingbox = getboundingbox(token);
+    console.log(boundingbox);
 
     let zoom = calculatezoom(boundingbox);
 
@@ -169,6 +184,7 @@ Hooks.on('updateToken', async (scene, token, delta, diff) => {
 
 function calculatezoom(boundingbox){
     //get the view port; minus 298 to account for the sidebar
+
     let sidebar = document.getElementById('sidebar');
     let sidebarwidth = sidebar.offsetWidth;
     let visW = window.innerWidth-sidebarwidth;
@@ -279,5 +295,5 @@ async function panandzoom(boundingbox, panspeed,zoom){
     }
 
     //Pings src for debug only (https://gitlab.com/foundry-azzurite/pings/-/blob/master/README.md)
-    window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
+    //window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
 }

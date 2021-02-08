@@ -16,6 +16,11 @@ export function PCsbox(token) {
 
     //let PCs = canvas.tokens.ownedTokens;
     let allchars = canvas.tokens.placeables;
+
+    if (!(game.settings.get("always-centred", 'includeinvisible',))){
+        allchars = allchars.filter(x=>x.worldVisible);
+    }
+
     let PCs = allchars.filter(c => c.actor.hasPlayerOwner);
 
     /*

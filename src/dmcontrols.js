@@ -16,15 +16,4 @@ export function DMGlobalControl() {
     }
 }
 
-export function DMControl(data){
-
-    if ('infonote' in data){
-       ui.notifications.info(data.infonote);
-    }
-
-    if ('boundingbox' in data){
-        panandzoom(data.boundingbox,data.panspeed,data.zoom)
-    }
-
-}
 
