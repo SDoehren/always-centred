@@ -7,7 +7,7 @@
 
 
 [![Github all releases](https://img.shields.io/github/downloads/sdoehren/always-centred/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
-[![Github Releases (by Release)](https://img.shields.io/github/downloads/sdoehren/always-centred/v0.1.4/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
+[![Github Releases (by Release)](https://img.shields.io/github/downloads/sdoehren/always-centred/v0.2.00/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
 
 
 
@@ -67,19 +67,19 @@ Outputs addition information to the console.
 
 ## Change log
 
-### 0.2.00 - DM controls
+#### 0.2.00 - DM controls
 - General code improvements
 - Added controls to allow DM to control all players' centring.
 - Added the option to ignore invisible tokens in party view
 - Quick change buttons added to scene controls
 - Issue with Party View mode and auto zoom being off partially mitigated.
 
-### 0.1.3 - Hot Fix2
+#### 0.1.3 - Hot Fix2
 
-### 0.1.2 - Hot Fix
+#### 0.1.2 - Hot Fix
 - some users reported recieving DM control notifications
 
-### 0.1.1 - Bug Fix
+#### 0.1.1 - Bug Fix
 
 - Vastly reduced conflict with multilevel tokens
 - Player Characters mode renamed Party View
