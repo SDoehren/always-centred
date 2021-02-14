@@ -67,7 +67,7 @@ Outputs addition information to the console.
 
 ## Change log
 
-### 0.2.0 - DM controls
+### 0.2.00 - DM controls
 - General code improvements
 - Added controls to allow DM to control all players' centring.
 - Added the option to ignore invisible tokens in party view
