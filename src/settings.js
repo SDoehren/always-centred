@@ -91,7 +91,7 @@ export const registerSettings = function () {
         name: "DM Control all?",
         hint:"Allows the DM to control player centring",
         scope: "world",
-        config: false,
+        config: true,
         default: false,
         type: Boolean
     });

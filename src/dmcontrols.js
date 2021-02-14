@@ -9,10 +9,10 @@ export function DMGlobalControl() {
 
     if (elactive){
         game.socket.emit('module.always-centred', {infonote:"The DM has taken control of your screen centring."});
-        ui.notifications.info("The DM has control xxx");
+        ui.notifications.info("The DM has control");
     } else {
         game.socket.emit('module.always-centred', {infonote:"The DM has released control of your screen centring."});
-        ui.notifications.info("The DM has released control xxx");
+        ui.notifications.info("The DM has released control");
     }
 }
 
