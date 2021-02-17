@@ -1,8 +1,7 @@
 
 
-
-
 export const registerSettings = function () {
+
 
     game.settings.register("always-centred", "mode", {
         name: "Mode:",
@@ -77,6 +76,65 @@ export const registerSettings = function () {
         type: Boolean
     });
 
+    game.settings.register("always-centred", "DMControl", {
+        name: "GM Control all?",
+        hint:"Allows the GM to control player centring (this mode assumes the players and GM are viewing the same scene)",
+        scope: "world",
+        config: true,
+        default: false,
+        type: Boolean
+    });
+
+    game.settings.register("always-centred", "Button-GMControl", {
+        name: "Button-GMControl",
+        hint: "Toggles button visiblity",
+        scope: "client",
+        config: true,
+        default: false,
+        type: Boolean,
+        onChange: () => {
+            location.reload();
+        }
+    });
+
+    game.settings.register("always-centred", "Button-OnOff", {
+        name: "Button-OnOff",
+        hint: "Toggles button visiblity",
+        scope: "world",
+        config: true,
+        default: false,
+        type: Boolean,
+        onChange: () => {
+            location.reload();
+        }
+    });
+
+
+
+    game.settings.register("always-centred", "Button-PartyView", {
+        name: "Button-PartyView",
+        hint: "Toggles button visiblity",
+        scope: "client",
+        config: true,
+        default: false,
+        type: Boolean,
+        onChange: () => {
+            location.reload();
+        }
+    });
+
+    game.settings.register("always-centred", "Button-SelectedToken", {
+        name: "Button-SelectedToken",
+        hint: "Toggles button visiblity",
+        scope: "client",
+        config: true,
+        default: false,
+        type: Boolean,
+        onChange: () => {
+            location.reload();
+        }
+    });
+
     game.settings.register("always-centred", "Debug", {
         name: "Debug",
         hint:"",
@@ -85,16 +143,4 @@ export const registerSettings = function () {
         default: true,
         type: Boolean
     });
-
-
-    game.settings.register("always-centred", "DMControl", {
-        name: "DM Control all?",
-        hint:"Allows the DM to control player centring",
-        scope: "world",
-        config: true,
-        default: false,
-        type: Boolean
-    });
-
-
 };

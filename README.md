@@ -7,7 +7,8 @@
 
 
 [![Github all releases](https://img.shields.io/github/downloads/sdoehren/always-centred/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
-[![Github Releases (by Release)](https://img.shields.io/github/downloads/sdoehren/always-centred/v0.2.00/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
+[![Github Releases (by Release)](https://img.shields.io/github/downloads/sdoehren/always-centred/v0.1.4/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
+[![Github Releases (by Release)](https://img.shields.io/github/downloads/sdoehren/always-centred/v0.2.01/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
 
 
 
@@ -17,6 +18,7 @@
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/sdoehren)
 
 Always Centred continuously centres and zooms the view on player owned characters or the currently selected token.
+
 
 
 ## Instructions
@@ -59,17 +61,34 @@ Whether to include all player owned tokens or just those the user can see in the
 - Debug: (Default: Disable)  
 Outputs addition information to the console.
 
+## Key binding
+
+Key bindings for GM Controls and change mode are available but requires [Keybind Lib](https://gitlab.com/fvtt-modules-lab/keybind-lib). 
+As Keybind Lib has not officially been released it is not a dependency of this module, but is supported if installed.
+
 ## Known issues
 
 - Minor conflict with multilevel tokens; currently mitigated entirely.  Always centred will not centre if a token moves inside an MLT object. (Fix planned)
-- Anonymous tokens will cause issues. (Fix planned)
 - When in Party View mode and auto zoom is off, if the tokens are too spread to fit in view, bouncing will occur. (Fix planned)
+
+
+## Changes under consideration
+
+- Non-visible tokens being tracked when GM is controlling the screen and in selected token mode
+- Locking the viewport to stay within the map.
+- Moving buttons to their own area.
+- Adding key bind controls.
+- Centring the view as a group when multiple tokens are selected.
 
 ## Change log
 
-#### 0.2.00 - DM controls
+#### 0.2.01
+
+- Anonymous tokens issue resolved.
+
+#### 0.2.00 - GM controls
 - General code improvements
-- Added controls to allow DM to control all players' centring.
+- Added controls to allow GM to control all players' centring.
 - Added the option to ignore invisible tokens in party view
 - Quick change buttons added to scene controls
 - Issue with Party View mode and auto zoom being off partially mitigated.
@@ -77,7 +96,7 @@ Outputs addition information to the console.
 #### 0.1.3 - Hot Fix2
 
 #### 0.1.2 - Hot Fix
-- some users reported recieving DM control notifications
+- some users reported receiving GM control notifications
 
 #### 0.1.1 - Bug Fix
 

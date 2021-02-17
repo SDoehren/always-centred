@@ -15,7 +15,7 @@ export function selectedtokenbox(token) {
 export function PCsbox(token) {
 
     //let PCs = canvas.tokens.ownedTokens;
-    let allchars = canvas.tokens.placeables;
+    let allchars = canvas.tokens.placeables.filter(c => c.actor !== undefined);
 
     if (!(game.settings.get("always-centred", 'includeinvisible',))){
         allchars = allchars.filter(x=>x.worldVisible);

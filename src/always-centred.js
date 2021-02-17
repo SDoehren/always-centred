@@ -1,5 +1,5 @@
 import {registerSettings} from './settings.js';
-import {DMGlobalControl} from './dmcontrols.js';
+import {DMGlobalControl,DMGlobalControlSwitch} from './dmcontrols.js';
 import {selectedtokenbox, PCsbox} from './boxfinder.js';
 
 
@@ -20,6 +20,21 @@ function DMControl(data){
 Hooks.once('init', async () => {
     console.log('always-centred | Initializing always-centred');
     registerSettings();
+
+
+    if (game.modules.get("keybind-lib") !== undefined){
+        KeybindLib.register("always-centred", "Keybind-GMControl", {
+            name: "Toggle GM Control",
+            default: "Ctrl + KeyD",
+            onKeyDown: () => DMGlobalControlSwitch()
+        });
+
+        KeybindLib.register("always-centred", "Keybind-Mode", {
+            name: "Toggle",
+            default: "Ctrl + KeyF",
+            onKeyDown: () => SettingsChange("Rotate")
+        });
+    }
 });
 
 Hooks.on("ready", () => {
@@ -30,11 +45,11 @@ Hooks.on("ready", () => {
 
 
     if ((game.settings.get("always-centred",'DMControl')) & !(game.user.isGM)){
-        ui.notifications.info("The DM has control of your screen centring.");
+        ui.notifications.info("Always Centred | The DM has control of your screen centring.");
     }
 
     if ((game.settings.get("always-centred",'DMControl')) & (game.user.isGM)){
-        ui.notifications.info("The DM has control of the player screen centring.");
+        ui.notifications.info("Always Centred | The DM has control of the player screen centring.");
     }
 
 
@@ -47,59 +62,81 @@ Hooks.on("ready", () => {
 
 
 function SettingsChange(mode) {
-    game.settings.set("always-centred",'mode',mode);
-
     let modetext = {
         disabled:"disabled",
         pcs:"Party View",
         selectedtoken:"Selected Token"
     };
 
+    let moderotate = {
+        disabled:"pcs",
+        pcs:"selectedtoken",
+        selectedtoken:"disabled"
+    };
+
+    if (mode==="Rotate"){
+        mode = moderotate[game.settings.get("always-centred",'mode')];
+    }
+
+    game.settings.set("always-centred",'mode',mode);
+
     ui.notifications.info("Always Centred | Mode set to '"+modetext[mode]+"'.");
 
 
     if ((game.settings.get("always-centred",'DMControl')) & !(game.user.isGM)){
-        ui.notifications.info("The DM has control of your screen centring.");
+        ui.notifications.info("Always Centred | The DM has control of your screen centring.");
     }
 }
 
 Hooks.on("getSceneControlButtons", (controls) => {
-  const bar = controls.find((c) => c.name === "token");
-  bar.tools.push({
-    name: "always-centred-dmcontrol",
-    title: "DM Control Centring for All",
-    icon: "fas fa-globe-europe",
-      onClick: () => DMGlobalControl(),
-    toggle: true,
-      visible: game.user.isGM,
-  });
+    const bar = controls.find((c) => c.name === "token");
 
-  bar.tools.push({
-    name: "always-centred-stopcentre",
-    title: "Stop Centring",
-    icon: "fas fa-pause",
-    onClick: () => SettingsChange("disabled"),
-    button: true,
-  });
-  bar.tools.push({
-    name: "always-centred-centrePCs",
-    title: "Centre Party View",
-    icon: "far fa-object-group",
-      onClick: () => SettingsChange("pcs"),
-    button: true,
-  });
-  bar.tools.push({
-    name: "always-centred-selectedtoken",
-    title: "Centre Selected Token",
-    icon: "fas fa-universal-access",
-      onClick: () => SettingsChange("selectedtoken"),
-    button: true,
-  });
+    if (game.settings.get("always-centred", 'Button-GMControl',) ){
+        bar.tools.push({
+            name: "always-centred-dmcontrol",
+            title: "DM Control Centring for All",
+            icon: "fas fa-globe-europe",
+            onClick: () => DMGlobalControl(),
+            toggle: true,
+            visible: game.user.isGM,
+        });
+    }
+
+    if (game.settings.get("always-centred", 'Button-OnOff',) ) {
+        bar.tools.push({
+            name: "always-centred-stopcentre",
+            title: "Toggle Centring",
+            icon: "fas fa-pause",
+            onClick: () => SettingsChange("disabled"),
+            button: true,
+        });
+    }
+
+    if (game.settings.get("always-centred", 'Button-PartyView',) ) {
+        bar.tools.push({
+            name: "always-centred-centrePCs",
+            title: "Centre Party View",
+            icon: "far fa-object-group",
+            onClick: () => SettingsChange("pcs"),
+            button: true,
+        });
+    }
+    if (game.settings.get("always-centred", 'Button-SelectedToken',) ) {
+        bar.tools.push({
+            name: "always-centred-selectedtoken",
+            title: "Centre Selected Token",
+            icon: "fas fa-universal-access",
+            onClick: () => SettingsChange("selectedtoken"),
+            button: true,
+        });
+    }
 });
+
+
 
 function checkMLT(token){
     if (game.modules.get("multilevel-tokens") === undefined){
-        return false
+        return false;
     }
 
     let tokenx = token.x+(canvas.grid.w*token.width)/2
@@ -130,7 +167,7 @@ function getboundingbox(token){
     } else if (game.settings.get("always-centred", 'mode',) === "pcs") {
 
         //if token not owned by player exit early
-        let allchars = canvas.tokens.placeables;
+        let allchars = canvas.tokens.placeables.filter(c => c.actor !== undefined);
         let PCs = allchars.filter(c => c.actor.hasPlayerOwner);
         let PCids = PCs.map(c => c.actor.id);
 
@@ -142,28 +179,34 @@ function getboundingbox(token){
     return boundingbox;
 }
 
-
-
-
-Hooks.on('updateToken', async (scene, token, delta, diff) => {
+async function performrunchecks(token){
     //check setting is on
-    if (game.settings.get("always-centred", 'mode',) === "disabled") {return;}
+    if (game.settings.get("always-centred", 'mode',) === "disabled") {return false;}
 
-    let mover = canvas.tokens.placeables.filter(PC => PC.id == token._id)[0];
+    let mover = canvas.tokens.placeables.filter(c => c.actor !== undefined);
+    mover = mover.filter(PC => PC.id === token._id)[0];
     let movervel = mover._velocity
     let oldposition = {x:token.x-movervel.dx,y:token.y-movervel.dy,width:token.width,height:token.height}
 
-    if (checkMLT(token) & (checkMLT(oldposition))) {return;}
-
-
+    if (checkMLT(token) & (checkMLT(oldposition))) {return false;}
 
     if (!(game.user.isGM) & game.settings.get("always-centred",'DMControl')) {
         //socket message will come.
-        return;
+        return false;
     }
 
+    return true;
+}
+
+function runmainprocess(token){
+    let mover = canvas.tokens.placeables.filter(c => c.actor !== undefined);
+    mover = mover.filter(PC => PC.id == token._id)[0];
+    let movervel = mover._velocity
+    let oldposition = {x:token.x-movervel.dx,y:token.y-movervel.dy,width:token.width,height:token.height}
+
     let boundingbox = getboundingbox(token);
-    console.log(boundingbox);
+
+    if (boundingbox===undefined){return;}
 
     let zoom = calculatezoom(boundingbox);
 
@@ -176,11 +219,11 @@ Hooks.on('updateToken', async (scene, token, delta, diff) => {
 
     if (game.user.isGM & game.settings.get("always-centred", 'DMControl')) {
         console.log("always-centred | boundingbox emitted");
-        game.socket.emit('module.always-centred', {boundingbox: boundingbox, zoom: zoom, panspeed: panspeed});
+        game.socket.emit('module.always-centred', {boundingbox: boundingbox, zoom: zoom, panspeed: panspeed,mode:game.settings.get("always-centred", 'mode'),token:token});
     }
     panandzoom(boundingbox, panspeed, zoom)
+}
 
-})
 
 function calculatezoom(boundingbox){
     //get the view port; minus 298 to account for the sidebar
@@ -297,3 +340,12 @@ async function panandzoom(boundingbox, panspeed,zoom){
     //Pings src for debug only (https://gitlab.com/foundry-azzurite/pings/-/blob/master/README.md)
     //window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
 }
+
+Hooks.on('updateToken', async (scene, token, delta, diff) => {
+
+    let proceed = await performrunchecks(token)
+
+    if (proceed) {
+        runmainprocess(token)
+    }
+})
