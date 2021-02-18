@@ -7,7 +7,6 @@
 
 
 [![Github all releases](https://img.shields.io/github/downloads/sdoehren/always-centred/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
-[![Github Releases (by Release)](https://img.shields.io/github/downloads/sdoehren/always-centred/v0.1.4/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
 [![Github Releases (by Release)](https://img.shields.io/github/downloads/sdoehren/always-centred/v0.2.01/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
 
 
@@ -74,10 +73,8 @@ As Keybind Lib has not officially been released it is not a dependency of this m
 
 ## Changes under consideration
 
-- Non-visible tokens being tracked when GM is controlling the screen and in selected token mode
 - Locking the viewport to stay within the map.
 - Moving buttons to their own area.
-- Adding key bind controls.
 - Centring the view as a group when multiple tokens are selected.
 
 ## Change log
@@ -85,6 +82,11 @@ As Keybind Lib has not officially been released it is not a dependency of this m
 #### 0.2.01
 
 - Anonymous tokens issue resolved.
+- Invisible tokens trigger pan in GM control mode
+- "DM" replaced with "GM" in documentation
+- Scene control buttons are now optional
+- Key binds are now partial available.
+- Bug Reporter support added.
 
 #### 0.2.00 - GM controls
 - General code improvements
@@ -92,6 +94,8 @@ As Keybind Lib has not officially been released it is not a dependency of this m
 - Added the option to ignore invisible tokens in party view
 - Quick change buttons added to scene controls
 - Issue with Party View mode and auto zoom being off partially mitigated.
+
+#### 0.1.4 - Hot Fix3
 
 #### 0.1.3 - Hot Fix2
 

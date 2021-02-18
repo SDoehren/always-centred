@@ -7,12 +7,21 @@ import {selectedtokenbox, PCsbox} from './boxfinder.js';
 
 function DMControl(data){
     console.log(data);
+
     if ('infonote' in data){
        ui.notifications.info(data.infonote);
     }
 
     if ('boundingbox' in data){
-        panandzoom(data.boundingbox,data.panspeed,data.zoom)
+        let allchars = canvas.tokens.placeables.filter(c => c.actor !== undefined);
+        let vischars = allchars.filter(x=>x.worldVisible);
+        let visids = vischars.map(c => c.id);
+
+        if (visids.includes(data.token._id)) {
+            panandzoom(data.boundingbox, data.panspeed, data.zoom)
+        } else {
+            runmainprocess(data.token,true)
+        }
     }
 
 }
@@ -28,6 +37,7 @@ Hooks.once('init', async () => {
             default: "Ctrl + KeyD",
             onKeyDown: () => DMGlobalControlSwitch()
         });
+
 
         KeybindLib.register("always-centred", "Keybind-Mode", {
             name: "Toggle",
@@ -179,7 +189,7 @@ function getboundingbox(token){
     return boundingbox;
 }
 
-async function performrunchecks(token){
+async function performrunchecks(token,skipdmcheck){
     //check setting is on
     if (game.settings.get("always-centred", 'mode',) === "disabled") {return false;}
 
@@ -190,23 +200,27 @@ async function performrunchecks(token){
 
     if (checkMLT(token) & (checkMLT(oldposition))) {return false;}
 
-    if (!(game.user.isGM) & game.settings.get("always-centred",'DMControl')) {
-        //socket message will come.
-        return false;
+    if (!(skipdmcheck)) {
+        if (!(game.user.isGM) & game.settings.get("always-centred", 'DMControl')) {
+            //socket message will come.
+            return false;
+        }
     }
 
     return true;
 }
 
-function runmainprocess(token){
+function runmainprocess(token,skipdmcheck) {
     let mover = canvas.tokens.placeables.filter(c => c.actor !== undefined);
-    mover = mover.filter(PC => PC.id == token._id)[0];
+    mover = mover.filter(PC => PC.id === token._id)[0];
     let movervel = mover._velocity
-    let oldposition = {x:token.x-movervel.dx,y:token.y-movervel.dy,width:token.width,height:token.height}
+    let oldposition = {x: token.x - movervel.dx, y: token.y - movervel.dy, width: token.width, height: token.height}
 
     let boundingbox = getboundingbox(token);
 
-    if (boundingbox===undefined){return;}
+    if (boundingbox === undefined) {
+        return;
+    }
 
     let zoom = calculatezoom(boundingbox);
 
@@ -216,10 +230,17 @@ function runmainprocess(token){
         panspeed = 0
     }
 
-
-    if (game.user.isGM & game.settings.get("always-centred", 'DMControl')) {
-        console.log("always-centred | boundingbox emitted");
-        game.socket.emit('module.always-centred', {boundingbox: boundingbox, zoom: zoom, panspeed: panspeed,mode:game.settings.get("always-centred", 'mode'),token:token});
+    if (!(skipdmcheck)) {
+        if (game.user.isGM & game.settings.get("always-centred", 'DMControl')) {
+            console.log("always-centred | boundingbox emitted");
+            game.socket.emit('module.always-centred', {
+                boundingbox: boundingbox,
+                zoom: zoom,
+                panspeed: panspeed,
+                mode: game.settings.get("always-centred", 'mode'),
+                token: token
+            });
+        }
     }
     panandzoom(boundingbox, panspeed, zoom)
 }

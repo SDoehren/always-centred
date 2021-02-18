@@ -77,8 +77,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register("always-centred", "DMControl", {
-        name: "GM Control all?",
-        hint:"Allows the GM to control player centring (this mode assumes the players and GM are viewing the same scene)",
+        name: "GM Control all users pan and zoom?",
+        hint:"Allows the GM to control player centring (this mode assumes all players and GM are viewing the same scene)",
         scope: "world",
         config: true,
         default: false,
@@ -86,7 +86,7 @@ export const registerSettings = function () {
     });
 
     game.settings.register("always-centred", "Button-GMControl", {
-        name: "Button-GMControl",
+        name: "Button - GMControl",
         hint: "Toggles button visiblity",
         scope: "client",
         config: true,
@@ -98,7 +98,7 @@ export const registerSettings = function () {
     });
 
     game.settings.register("always-centred", "Button-OnOff", {
-        name: "Button-OnOff",
+        name: "Button - OnOff",
         hint: "Toggles button visiblity",
         scope: "world",
         config: true,
@@ -112,7 +112,7 @@ export const registerSettings = function () {
 
 
     game.settings.register("always-centred", "Button-PartyView", {
-        name: "Button-PartyView",
+        name: "Button - PartyView",
         hint: "Toggles button visiblity",
         scope: "client",
         config: true,
@@ -124,7 +124,7 @@ export const registerSettings = function () {
     });
 
     game.settings.register("always-centred", "Button-SelectedToken", {
-        name: "Button-SelectedToken",
+        name: "Button - SelectedToken",
         hint: "Toggles button visiblity",
         scope: "client",
         config: true,

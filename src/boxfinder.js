@@ -31,19 +31,27 @@ export function PCsbox(token) {
     //console.log(PCs);
     //get list of Left and right x coordinates of the tokens and add the new location of the move token
     let LeftXs = nonmovers.map(PC => PC.x);
-    LeftXs.push(token.x);
+
 
     let gridwidth = canvas.grid.w;
     let RightXs = nonmovers.map(PC => PC.x+PC.w)
-    RightXs.push(token.x+token.width*gridwidth);
+
 
     //get list of top and bottom y coordinates of the tokens and add the new location of the move token
     let TopYs = nonmovers.map(PC => PC.y);
-    TopYs.push(token.y);
+
 
     let gridheight = canvas.grid.h;
     let BottomYs = nonmovers.map(PC => PC.y+PC.h);
-    BottomYs.push(token.y+token.height*gridheight);
+
+
+    if (PCs.map(c => c.id).includes(token._id)) {
+        LeftXs.push(token.x);
+        RightXs.push(token.x+token.width*gridwidth);
+        TopYs.push(token.y);
+        BottomYs.push(token.y+token.height*gridheight);
+    }
+
 
     let minX = Math.min.apply(Math, LeftXs );
     let maxX = Math.max.apply(Math, RightXs );
