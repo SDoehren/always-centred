@@ -15,11 +15,4 @@
   "socket": true,
   "allowBugReporter": true,
   "bugs": "https://github.com/SDoehren/always-centred/issues",
-
-  "dependencies":[
-    {
-      "name": "bug-reporter",
-      "manifest": "https://github.com/League-of-Foundry-Developers/bug-reporter/releases/download/1.0.0/module.json",
-    }
-  ]
 }

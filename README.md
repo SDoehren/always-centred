@@ -67,8 +67,8 @@ As Keybind Lib has not officially been released it is not a dependency of this m
 
 ## Known issues
 
-- Minor conflict with multilevel tokens; currently mitigated entirely.  Always centred will not centre if a token moves inside an MLT object. (Fix planned)
-- When in Party View mode and auto zoom is off, if the tokens are too spread to fit in view, bouncing will occur. (Fix planned)
+- Minor conflict with multilevel tokens; currently mitigated entirely.  Always centred will not centre if a token moves inside an MLT object.
+- When in Party View mode, if the tokens are too spread to fit in view, bouncing will occur. (Fix planned)
 
 
 ## Changes under consideration
@@ -79,16 +79,16 @@ As Keybind Lib has not officially been released it is not a dependency of this m
 
 ## Change log
 
-#### 0.2.01
+#### 0.2.01 - GM controls Main
 
 - Anonymous tokens issue resolved.
 - Invisible tokens trigger pan in GM control mode
 - "DM" replaced with "GM" in documentation
 - Scene control buttons are now optional
-- Key binds are now partial available.
+- Key binds are now partial supported via [Keybind Lib](https://gitlab.com/fvtt-modules-lab/keybind-lib).
 - Bug Reporter support added.
 
-#### 0.2.00 - GM controls
+#### 0.2.00 - GM controls Beta
 - General code improvements
 - Added controls to allow GM to control all players' centring.
 - Added the option to ignore invisible tokens in party view
