@@ -12,5 +12,7 @@
   "download": "https://github.com/SDoehren/always-centred/releases/latest/download/always-centred0.2.01.zip",
   "license": "CC-BY-NC-SA-4.0",
   "readme": "https://raw.githubusercontent.com/SDoehren/always-centred/main/README.md",
-  "socket": true
+  "socket": true,
+  "allowBugReporter": true,
+  "bugs": "https://github.com/SDoehren/always-centred/issues"
 }
