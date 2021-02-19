@@ -60,7 +60,7 @@ Hooks.on("ready", () => {
 
     if ((game.settings.get("always-centred",'DMControl')) & (game.user.isGM)){
         ui.notifications.info("Always Centred | The DM has control of the player screen centring.");
-    }
+    } 
 
 
     if (game.user.isGM){
