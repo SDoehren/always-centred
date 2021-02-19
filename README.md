@@ -7,7 +7,7 @@
 
 
 [![Github all releases](https://img.shields.io/github/downloads/sdoehren/always-centred/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
-[![Github Releases (by Release)](https://img.shields.io/github/downloads/sdoehren/always-centred/v0.2.01/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
+[![Github Releases (by Release)](https://img.shields.io/github/downloads/sdoehren/always-centred/v0.2.03/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
 
 
 
