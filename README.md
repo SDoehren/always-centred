@@ -10,7 +10,6 @@
 [![Github Releases (by Release)](https://img.shields.io/github/downloads/sdoehren/always-centred/v0.2.03/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
 
 
-
 [![GitHub issues](https://img.shields.io/github/issues/sdoehren/always-centred.svg)](https://GitHub.com/sdoehren/always-centred/issues/)
  
 
@@ -76,6 +75,7 @@ As Keybind Lib has not officially been released it is not a dependency of this m
 - Locking the viewport to stay within the map.
 - Moving buttons to their own area.
 - Centring the view as a group when multiple tokens are selected.
+- New "combat" mode where the focus follows the active combatant.
 
 ## Change log
 
