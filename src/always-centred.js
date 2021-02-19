@@ -13,7 +13,7 @@ function DMControl(data){
     }
 
     if ('boundingbox' in data){
-        let allchars = canvas.tokens.placeables.filter(c => c.actor !== undefined);
+        let allchars = canvas.tokens.placeables.filter(c => c.actor !== null);
         let vischars = allchars.filter(x=>x.worldVisible);
         let visids = vischars.map(c => c.id);
 
@@ -177,7 +177,7 @@ function getboundingbox(token){
     } else if (game.settings.get("always-centred", 'mode',) === "pcs") {
 
         //if token not owned by player exit early
-        let allchars = canvas.tokens.placeables.filter(c => c.actor !== undefined);
+        let allchars = canvas.tokens.placeables.filter(c => c.actor !== null);
         let PCs = allchars.filter(c => c.actor.hasPlayerOwner);
         let PCids = PCs.map(c => c.actor.id);
 
@@ -193,7 +193,7 @@ async function performrunchecks(token,skipdmcheck){
     //check setting is on
     if (game.settings.get("always-centred", 'mode',) === "disabled") {return false;}
 
-    let mover = canvas.tokens.placeables.filter(c => c.actor !== undefined);
+    let mover = canvas.tokens.placeables.filter(c => c.actor !== null);
     mover = mover.filter(PC => PC.id === token._id)[0];
     let movervel = mover._velocity
     let oldposition = {x:token.x-movervel.dx,y:token.y-movervel.dy,width:token.width,height:token.height}
@@ -211,7 +211,7 @@ async function performrunchecks(token,skipdmcheck){
 }
 
 function runmainprocess(token,skipdmcheck) {
-    let mover = canvas.tokens.placeables.filter(c => c.actor !== undefined);
+    let mover = canvas.tokens.placeables.filter(c => c.actor !== null);
     mover = mover.filter(PC => PC.id === token._id)[0];
     let movervel = mover._velocity
     let oldposition = {x: token.x - movervel.dx, y: token.y - movervel.dy, width: token.width, height: token.height}

@@ -79,6 +79,10 @@ As Keybind Lib has not officially been released it is not a dependency of this m
 
 ## Change log
 
+#### 0.2.03 - Hot fix
+
+- Anonymous tokens issue re-resolved. Thanks Jon.
+
 #### 0.2.01 - GM controls Main
 
 - Anonymous tokens issue resolved.
