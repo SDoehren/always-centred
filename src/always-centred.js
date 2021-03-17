@@ -14,8 +14,15 @@ function DMControl(data){
 
     if ('boundingbox' in data){
         let allchars = canvas.tokens.placeables.filter(c => c.actor !== null);
-        let vischars = allchars.filter(x=>x.worldVisible);
-        let visids = vischars.map(c => c.id);
+
+        let visids;
+        if (!(game.settings.get("always-centred", 'includeinvisible',))){
+            let vischars = allchars.filter(x=>x.worldVisible);
+            visids = vischars.map(c => c.id);
+        } else {
+            visids = allchars.map(c => c.id);
+        }
+
 
         if (visids.includes(data.token._id)) {
             panandzoom(data.boundingbox, data.panspeed, data.zoom)

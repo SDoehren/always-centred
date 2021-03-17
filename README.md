@@ -79,6 +79,10 @@ As Keybind Lib has not officially been released it is not a dependency of this m
 
 ## Change log
 
+#### 0.2.04 - Invisible Token and GM Control
+
+- Resolved issue around Invisible Token and GM Control
+
 #### 0.2.03 - Hot fix
 
 - Anonymous tokens issue re-resolved. Thanks Jon.
