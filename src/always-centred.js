@@ -1,5 +1,5 @@
 import {registerSettings} from './settings.js';
-import {DMGlobalControl,DMGlobalControlSwitch} from './dmcontrols.js';
+import {DMGlobalControlSwitch} from './dmcontrols.js';
 import {selectedtokenbox, PCsbox} from './boxfinder.js';
 
 
@@ -68,11 +68,6 @@ Hooks.on("ready", () => {
     if ((game.settings.get("always-centred",'DMControl')) & (game.user.isGM)){
         ui.notifications.info("Always Centred | The DM has control of the player screen centring.");
     }
-
-
-    if (game.user.isGM){
-        game.settings.set("always-centred",'DMControl',false);
-    }
 });
 
 
@@ -113,9 +108,9 @@ Hooks.on("getSceneControlButtons", (controls) => {
             name: "always-centred-dmcontrol",
             title: "DM Control Centring for All",
             icon: "fas fa-globe-europe",
-            onClick: () => DMGlobalControl(),
-            toggle: true,
+            onClick: () => DMGlobalControlSwitch(),
             visible: game.user.isGM,
+            button: true,
         });
     }
 

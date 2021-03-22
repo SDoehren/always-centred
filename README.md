@@ -79,6 +79,10 @@ As Keybind Lib has not officially been released it is not a dependency of this m
 
 ## Change log
 
+#### 0.2.05 - Removed Test Code
+
+- Some test code was left in that caused GM control to turn off on reload.
+
 #### 0.2.04 - Invisible Token and GM Control
 
 - Resolved issue around Invisible Token and GM Control
