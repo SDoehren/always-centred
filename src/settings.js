@@ -13,14 +13,14 @@ export const registerSettings = function () {
         choices: {disabled: "Disabled", pcs: "Party View", selectedtoken: "Selected Token"},
     });
 
-    game.settings.register("always-centred", "combatfocus", {
+    /*game.settings.register("always-centred", "combatfocus", {
         name: "Combat Focus",
         hint:"Focus camera on current combatant on turn change.",
         scope: "client",
         config: true,
         default: false,
         type: Boolean
-    });
+    });*/
 
     game.settings.register("always-centred", "autozoom", {
         name: "Auto Zoom",
