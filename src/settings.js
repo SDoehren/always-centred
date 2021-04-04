@@ -18,7 +18,7 @@ export const registerSettings = function () {
         hint:"Focus camera on current combatant on turn change.",
         scope: "client",
         config: true,
-        default: true,
+        default: false,
         type: Boolean
     });
 
@@ -92,56 +92,6 @@ export const registerSettings = function () {
         config: true,
         default: false,
         type: Boolean
-    });
-
-    game.settings.register("always-centred", "Button-GMControl", {
-        name: "Button - GMControl",
-        hint: "Toggles button visiblity",
-        scope: "client",
-        config: true,
-        default: false,
-        type: Boolean,
-        onChange: () => {
-            location.reload();
-        }
-    });
-
-    game.settings.register("always-centred", "Button-OnOff", {
-        name: "Button - OnOff",
-        hint: "Toggles button visiblity",
-        scope: "world",
-        config: true,
-        default: false,
-        type: Boolean,
-        onChange: () => {
-            location.reload();
-        }
-    });
-
-
-
-    game.settings.register("always-centred", "Button-PartyView", {
-        name: "Button - PartyView",
-        hint: "Toggles button visiblity",
-        scope: "client",
-        config: true,
-        default: false,
-        type: Boolean,
-        onChange: () => {
-            location.reload();
-        }
-    });
-
-    game.settings.register("always-centred", "Button-SelectedToken", {
-        name: "Button - SelectedToken",
-        hint: "Toggles button visiblity",
-        scope: "client",
-        config: true,
-        default: false,
-        type: Boolean,
-        onChange: () => {
-            location.reload();
-        }
     });
 
     game.settings.register("always-centred", "Debug", {

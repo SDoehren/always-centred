@@ -1,9 +1,20 @@
 import {registerSettings} from './settings.js';
 import {DMGlobalControlSwitch} from './dmcontrols.js';
 import {selectedtokenbox, PCsbox} from './boxfinder.js';
-
+import {AlwaysCentredLayer} from './always-centredLayer.js';
 
 'use strict';
+
+function registerLayer() {
+  const layers = mergeObject(Canvas.layers, {
+    AlwaysCentredLayer: AlwaysCentredLayer
+  });
+  Object.defineProperty(Canvas, 'layers', {
+    get: function () {
+      return layers
+    }
+  });
+}
 
 function DMControl(data){
     console.log(data);
@@ -36,21 +47,25 @@ function DMControl(data){
 Hooks.once('init', async () => {
     console.log('always-centred | Initializing always-centred');
     registerSettings();
+    registerLayer();
 
 
-    if (game.modules.get("keybind-lib") !== undefined){
-        KeybindLib.register("always-centred", "Keybind-GMControl", {
-            name: "Toggle GM Control",
-            default: "Ctrl + KeyD",
-            onKeyDown: () => DMGlobalControlSwitch()
-        });
+    if (game.modules.get("keybind-lib") !== undefined) {
+        if (game.modules.get("keybind-lib").active === true) {
+
+            KeybindLib.register("always-centred", "Keybind-GMControl", {
+                name: "Toggle GM Control",
+                default: "Ctrl + KeyD",
+                onKeyDown: () => DMGlobalControlSwitch()
+            });
 
 
-        KeybindLib.register("always-centred", "Keybind-Mode", {
-            name: "Toggle",
-            default: "Ctrl + KeyF",
-            onKeyDown: () => SettingsChange("Rotate")
-        });
+            KeybindLib.register("always-centred", "Keybind-Mode", {
+                name: "Toggle",
+                default: "Ctrl + KeyF",
+                onKeyDown: () => SettingsChange("Rotate")
+            });
+        }
     }
 });
 
@@ -101,48 +116,47 @@ function SettingsChange(mode) {
 }
 
 Hooks.on("getSceneControlButtons", (controls) => {
-    const bar = controls.find((c) => c.name === "token");
-
-    if (game.settings.get("always-centred", 'Button-GMControl',) ){
-        bar.tools.push({
+  controls.push({
+    name: "Always Centred Controls",
+    title: "Always Centred Controls",
+    icon: "far fa-object-group",
+    layer: "AlwaysCentredLayer",
+    visible: game.user.can("DRAWING_CREATE") || game.user.isGM,
+    tools: [
+        {
             name: "always-centred-dmcontrol",
             title: "DM Control Centring for All",
             icon: "fas fa-globe-europe",
+            layer: "FXMasterLayer",
             onClick: () => DMGlobalControlSwitch(),
             visible: game.user.isGM,
             button: true,
-        });
-    }
-
-    if (game.settings.get("always-centred", 'Button-OnOff',) ) {
-        bar.tools.push({
+        },
+        {
             name: "always-centred-stopcentre",
             title: "Toggle Centring",
             icon: "fas fa-pause",
             onClick: () => SettingsChange("disabled"),
             button: true,
-        });
-    }
-
-    if (game.settings.get("always-centred", 'Button-PartyView',) ) {
-        bar.tools.push({
+        },
+        {
             name: "always-centred-centrePCs",
             title: "Centre Party View",
             icon: "far fa-object-group",
             onClick: () => SettingsChange("pcs"),
             button: true,
-        });
-    }
-    if (game.settings.get("always-centred", 'Button-SelectedToken',) ) {
-        bar.tools.push({
+        },
+        {
             name: "always-centred-selectedtoken",
             title: "Centre Selected Token",
             icon: "fas fa-universal-access",
             onClick: () => SettingsChange("selectedtoken"),
             button: true,
-        });
-    }
+        },
+    ],
+  });
 });
+
 
 
 
@@ -219,6 +233,8 @@ function runmainprocess(token,skipdmcheck) {
     let oldposition = {x: token.x - movervel.dx, y: token.y - movervel.dy, width: token.width, height: token.height}
 
     let boundingbox = getboundingbox(token);
+
+
 
     if (boundingbox === undefined) {
         return;
@@ -365,9 +381,7 @@ async function panandzoom(boundingbox, panspeed,zoom){
 }
 
 Hooks.on('updateToken', async (scene, token, delta, diff) => {
-
     let proceed = await performrunchecks(token)
-
     if (proceed) {
         runmainprocess(token)
     }

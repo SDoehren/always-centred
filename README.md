@@ -79,6 +79,10 @@ As Keybind Lib has not officially been released it is not a dependency of this m
 
 ## Change log
 
+#### 0.2.10 - Controls moved
+
+- Controls have been moved to their own area; related settings have been removed.
+
 #### 0.2.05 - Removed Test Code
 
 - Some test code was left in that caused GM control to turn off on reload.
