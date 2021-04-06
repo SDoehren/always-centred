@@ -31,6 +31,7 @@ export const registerSettings = function () {
         type: Boolean
     });
 
+
     game.settings.register("always-centred", "mitigatebounce", {
         name: "Mitigate Bouncing Issue",
         hint:"Only relevant when Auto Zoom is set to off and Mode is Party View. Forces Auto Zoom when required.",
@@ -38,6 +39,17 @@ export const registerSettings = function () {
         config: true,
         default: true,
         type: Boolean
+    });
+
+    game.settings.register("always-centred", "enablecontrols", {
+        name: "Enable HUD Controls",
+        scope: "client",
+        config: true,
+        default: true,
+        type: Boolean,
+        onChange: () => {
+            location.reload();
+        }
     });
 
     game.settings.register("always-centred", "paddingsq", {

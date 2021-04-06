@@ -13,7 +13,9 @@
 [![GitHub issues](https://img.shields.io/github/issues/sdoehren/always-centred.svg)](https://GitHub.com/sdoehren/always-centred/issues/)
  
 
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/sdoehren)
+[![ko-fi](https://img.shields.io/badge/ko--fi-Support%20Me-red)](https://ko-fi.com/sdoehren)
+[![Patreon](https://img.shields.io/badge/Patreon-Support%20Me-red)](https://www.patreon.com/bePatron?u=49614365)
+
 
 Always Centred continuously centres and zooms the view on player owned characters or the currently selected token.
 
@@ -78,6 +80,10 @@ As Keybind Lib has not officially been released it is not a dependency of this m
 - New "combat" mode where the focus follows the active combatant.
 
 ## Change log
+
+#### 0.2.11 - Controls Option
+
+- Option to disable HUD controls readded
 
 #### 0.2.10 - Controls moved
 

@@ -116,45 +116,47 @@ function SettingsChange(mode) {
 }
 
 Hooks.on("getSceneControlButtons", (controls) => {
-  controls.push({
-    name: "Always Centred Controls",
-    title: "Always Centred Controls",
-    icon: "far fa-object-group",
-    layer: "AlwaysCentredLayer",
-    visible: game.user.can("DRAWING_CREATE") || game.user.isGM,
-    tools: [
-        {
-            name: "always-centred-dmcontrol",
-            title: "DM Control Centring for All",
-            icon: "fas fa-globe-europe",
-            layer: "FXMasterLayer",
-            onClick: () => DMGlobalControlSwitch(),
-            visible: game.user.isGM,
-            button: true,
-        },
-        {
-            name: "always-centred-stopcentre",
-            title: "Toggle Centring",
-            icon: "fas fa-pause",
-            onClick: () => SettingsChange("disabled"),
-            button: true,
-        },
-        {
-            name: "always-centred-centrePCs",
-            title: "Centre Party View",
-            icon: "far fa-object-group",
-            onClick: () => SettingsChange("pcs"),
-            button: true,
-        },
-        {
-            name: "always-centred-selectedtoken",
-            title: "Centre Selected Token",
-            icon: "fas fa-universal-access",
-            onClick: () => SettingsChange("selectedtoken"),
-            button: true,
-        },
-    ],
-  });
+  if (game.settings.get("always-centred",'enablecontrols')) {
+      controls.push({
+          name: "Always Centred Controls",
+          title: "Always Centred Controls",
+          icon: "far fa-object-group",
+          layer: "AlwaysCentredLayer",
+          visible: game.user.can("DRAWING_CREATE") || game.user.isGM,
+          tools: [
+              {
+                  name: "always-centred-dmcontrol",
+                  title: "DM Control Centring for All",
+                  icon: "fas fa-globe-europe",
+                  layer: "FXMasterLayer",
+                  onClick: () => DMGlobalControlSwitch(),
+                  visible: game.user.isGM,
+                  button: true,
+              },
+              {
+                  name: "always-centred-stopcentre",
+                  title: "Toggle Centring",
+                  icon: "fas fa-pause",
+                  onClick: () => SettingsChange("disabled"),
+                  button: true,
+              },
+              {
+                  name: "always-centred-centrePCs",
+                  title: "Centre Party View",
+                  icon: "far fa-object-group",
+                  onClick: () => SettingsChange("pcs"),
+                  button: true,
+              },
+              {
+                  name: "always-centred-selectedtoken",
+                  title: "Centre Selected Token",
+                  icon: "fas fa-universal-access",
+                  onClick: () => SettingsChange("selectedtoken"),
+                  button: true,
+              },
+          ],
+      });
+  }
 });
 
 
