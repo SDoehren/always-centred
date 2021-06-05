@@ -72,7 +72,7 @@ export const registerSettings = function () {
 
     game.settings.register("always-centred", "maxzoom", {
         name: "Max zoom level",
-        hint:"",
+        hint:"0.1 is far away, 3 is very close",
         scope: "client",
         config: true,
         default: 1,

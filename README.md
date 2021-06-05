@@ -13,8 +13,8 @@
 [![GitHub issues](https://img.shields.io/github/issues/sdoehren/always-centred.svg)](https://GitHub.com/sdoehren/always-centred/issues/)
  
 
-[![ko-fi](https://img.shields.io/badge/ko--fi-Support%20Me-red)](https://ko-fi.com/sdoehren)
-[![Patreon](https://img.shields.io/badge/Patreon-Support%20Me-red)](https://www.patreon.com/bePatron?u=49614365)
+[![ko-fi](https://img.shields.io/badge/ko--fi-Support%20Me-red?style=flat-square&logo=ko-fi)](https://ko-fi.com/sdoehren)
+[![Patreon](https://img.shields.io/badge/Patreon-Support%20Me-red?style=flat-square&logo=patreon)](https://www.patreon.com/bePatron?u=49614365)
 
 
 Always Centred continuously centres and zooms the view on player owned characters or the currently selected token.
@@ -75,11 +75,16 @@ As Keybind Lib has not officially been released it is not a dependency of this m
 ## Changes under consideration
 
 - Locking the viewport to stay within the map.
-- Moving buttons to their own area.
 - Centring the view as a group when multiple tokens are selected.
 - New "combat" mode where the focus follows the active combatant.
 
+###Licence
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+
 ## Change log
+
+#### 0.3.00 - 0.8.6 support added
 
 #### 0.2.11 - Controls Option
 

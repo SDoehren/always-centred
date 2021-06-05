@@ -35,7 +35,7 @@ function DMControl(data){
         }
 
 
-        if (visids.includes(data.token._id)) {
+        if (visids.includes(data.token.id)) {
             panandzoom(data.boundingbox, data.panspeed, data.zoom)
         } else {
             runmainprocess(data.token,true)
@@ -122,13 +122,13 @@ Hooks.on("getSceneControlButtons", (controls) => {
           title: "Always Centred Controls",
           icon: "far fa-object-group",
           layer: "AlwaysCentredLayer",
-          visible: game.user.can("DRAWING_CREATE") || game.user.isGM,
+          visible: true,
           tools: [
               {
                   name: "always-centred-dmcontrol",
                   title: "DM Control Centring for All",
                   icon: "fas fa-globe-europe",
-                  layer: "FXMasterLayer",
+                  layer: "AlwaysCentredLayer",
                   onClick: () => DMGlobalControlSwitch(),
                   visible: game.user.isGM,
                   button: true,
@@ -139,6 +139,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
                   icon: "fas fa-pause",
                   onClick: () => SettingsChange("disabled"),
                   button: true,
+                  visible: true,
               },
               {
                   name: "always-centred-centrePCs",
@@ -146,6 +147,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
                   icon: "far fa-object-group",
                   onClick: () => SettingsChange("pcs"),
                   button: true,
+                  visible: true,
               },
               {
                   name: "always-centred-selectedtoken",
@@ -153,6 +155,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
                   icon: "fas fa-universal-access",
                   onClick: () => SettingsChange("selectedtoken"),
                   button: true,
+                  visible: true,
               },
           ],
       });
@@ -187,7 +190,7 @@ function getboundingbox(token){
     if (game.settings.get("always-centred", 'mode',) === "selectedtoken") {
         //get list of controlled tokens ids; if not selected by player exit early
         let controlledids = canvas.tokens.controlled.map(c => c.id);
-        if (!(controlledids.includes(token._id))) {return;}
+        if (!(controlledids.includes(token.id))) {return;}
 
         //otherwise get the box around the token
         boundingbox = selectedtokenbox(token);
@@ -199,10 +202,14 @@ function getboundingbox(token){
         let PCs = allchars.filter(c => c.actor.hasPlayerOwner);
         let PCids = PCs.map(c => c.actor.id);
 
-        if (!(PCids.includes(token.actorId))) {return;}
+
+        if (!(PCids.includes(token._actor.id))) {return;}
 
         boundingbox = PCsbox(token);
     }
+    console.log(boundingbox);
+    console.log(boundingbox);
+    console.log(boundingbox);
 
     return boundingbox;
 }
@@ -211,10 +218,12 @@ async function performrunchecks(token,skipdmcheck){
     //check setting is on
     if (game.settings.get("always-centred", 'mode',) === "disabled") {return false;}
 
+
+
     let mover = canvas.tokens.placeables.filter(c => c.actor !== null);
-    mover = mover.filter(PC => PC.id === token._id)[0];
+    mover = mover.filter(PC => PC.id === token.id)[0];
     let movervel = mover._velocity
-    let oldposition = {x:token.x-movervel.dx,y:token.y-movervel.dy,width:token.width,height:token.height}
+    let oldposition = {x:token.data.x-movervel.dx,y:token.data.y-movervel.dy,width:token.data.width,height:token.data.height}
 
     if (checkMLT(token) & (checkMLT(oldposition))) {return false;}
 
@@ -230,12 +239,12 @@ async function performrunchecks(token,skipdmcheck){
 
 function runmainprocess(token,skipdmcheck) {
     let mover = canvas.tokens.placeables.filter(c => c.actor !== null);
-    mover = mover.filter(PC => PC.id === token._id)[0];
+    mover = mover.filter(PC => PC.id === token.id)[0];
     let movervel = mover._velocity
-    let oldposition = {x: token.x - movervel.dx, y: token.y - movervel.dy, width: token.width, height: token.height}
+    let oldposition = {x:token.data.x-movervel.dx,y:token.data.y-movervel.dy,width:token.data.width,height:token.data.height}
 
     let boundingbox = getboundingbox(token);
-
+    console.log(boundingbox);
 
 
     if (boundingbox === undefined) {
@@ -322,7 +331,11 @@ function calculatezoom(boundingbox){
 
         //find the smallest (farthest away) of the zooms
         //if all the zooms are closer than the minimum, set to minimum
-        let zoomopts = [zoomWforcedpadded,zoomHforcedpadded,zoomWperpadded, zoomWpadded, zoomHperpadded, zoomHpadded, game.settings.get("always-centred", 'maxzoom',)];
+        let mzoom = game.settings.get("always-centred", 'maxzoom',);
+        if (mzoom <0.1){
+            mzoom = 0.1
+        }
+        let zoomopts = [zoomWforcedpadded,zoomHforcedpadded,zoomWperpadded, zoomWpadded, zoomHperpadded, zoomHpadded, mzoom];
         zoom = Math.min.apply(Math, zoomopts);
     }
 
@@ -382,7 +395,7 @@ async function panandzoom(boundingbox, panspeed,zoom){
     //window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
 }
 
-Hooks.on('updateToken', async (scene, token, delta, diff) => {
+Hooks.on('updateToken', async (token, delta, diff) => {
     let proceed = await performrunchecks(token)
     if (proceed) {
         runmainprocess(token)
