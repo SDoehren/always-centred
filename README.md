@@ -86,6 +86,8 @@ As Keybind Lib has not officially been released it is not a dependency of this m
 
 #### 0.3.00 - 0.8.6 support added
 
+- 0.7.x is no longer officially supported
+
 #### 0.2.11 - Controls Option
 
 - Option to disable HUD controls readded
@@ -136,3 +138,8 @@ As Keybind Lib has not officially been released it is not a dependency of this m
 
 #### 0.1.0 - First Beta Release  
 This was the first public beta.
+
+
+### Licence
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
