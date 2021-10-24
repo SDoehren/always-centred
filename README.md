@@ -10,7 +10,7 @@
 [![Github Releases (by Release)](https://img.shields.io/github/downloads/sdoehren/always-centred/latest/total.svg)](https://GitHub.com/sdoehren/always-centred/releases/)
 
 
-[![GitHub issues](https://img.shields.io/github/issues/sdoehren/always-centred.svg)](https://GitHub.com/sdoehren/always-centred/issues/)
+[![GitHub issues](https://img.shields.io/github/issues/sdoehren/always-centred/bug.svg)](https://GitHub.com/sdoehren/always-centred/issues/)
  
 
 [![ko-fi](https://img.shields.io/badge/ko--fi-Support%20Me-red?style=flat-square&logo=ko-fi)](https://ko-fi.com/sdoehren)
@@ -83,6 +83,11 @@ As Keybind Lib has not officially been released it is not a dependency of this m
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
 ## Change log
+
+#### 0004
+
+- Bug Fix - "AlwaysCentredLayer" mislabeled
+
 
 #### 0.3.00 - 0.8.6 support added
 

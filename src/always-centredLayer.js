@@ -7,7 +7,7 @@ export class AlwaysCentredLayer extends PlaceablesLayer {
 
   static get layerOptions() {
     return foundry.utils.mergeObject(super.layerOptions, {
-      name: "TensionLayer",
+      name: "AlwaysCentredLayer",
       canDragCreate: false,
       zIndex: 180
     });
