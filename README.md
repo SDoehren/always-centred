@@ -84,6 +84,8 @@ As Keybind Lib has not officially been released it is not a dependency of this m
 
 ## Change log
 
+#### 0005 - V9 Compatibility Version
+
 #### 0004
 
 - Bug Fix - "AlwaysCentredLayer" mislabeled

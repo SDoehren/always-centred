@@ -1,5 +1,3 @@
-
-
 export class AlwaysCentredLayer extends PlaceablesLayer {
   constructor() {
     super();
@@ -9,9 +7,8 @@ export class AlwaysCentredLayer extends PlaceablesLayer {
     return foundry.utils.mergeObject(super.layerOptions, {
       name: "AlwaysCentredLayer",
       canDragCreate: false,
-      zIndex: 180
+      zIndex: 4544
     });
   }
-
-  static documentName = "Note";
+  static documentName = "Tile";
 }

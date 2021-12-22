@@ -5,16 +5,27 @@ import {AlwaysCentredLayer} from './always-centredLayer.js';
 
 'use strict';
 
+
 function registerLayer() {
-  const layers = mergeObject(Canvas.layers, {
-    AlwaysCentredLayer: AlwaysCentredLayer
-  });
-  Object.defineProperty(Canvas, 'layers', {
-    get: function () {
-      return layers
+    const layers = {
+            AlwaysCentredLayer: {
+                layerClass: AlwaysCentredLayer,
+                group: "effects"
+            }
     }
-  });
+
+    CONFIG.Canvas.layers = mergeObject(Canvas.layers,layers);
+
+    if (!Object.is(Canvas.layers, CONFIG.Canvas.layers)) {
+        const layers = Canvas.layers;
+        Object.defineProperty(Canvas, 'layers', {
+            get: function () {
+                return foundry.utils.mergeObject(layers, CONFIG.Canvas.layers)
+            }
+        })
+    }
 }
+
 
 function DMControl(data){
     console.log(data);
@@ -207,8 +218,6 @@ function getboundingbox(token){
 
         boundingbox = PCsbox(token);
     }
-    console.log(boundingbox);
-    console.log(boundingbox);
     console.log(boundingbox);
 
     return boundingbox;
