@@ -19,6 +19,13 @@
 
 Always Centred continuously centres and zooms the view on player owned characters or the currently selected token.
 
+## Future of Always Centred
+
+In V0006 the module will be returned to fully working but extremely simplified to aid with maintenance.
+At best, Always Centred is in "maintainance only mode" but it should be seen as unsupported going forwards.  
+
+To be open, I barely use the module myself and in the year since it has been released it has generated minimal income.  
+As a result there is little reason for my continued support of this module.
 
 
 ## Instructions
