@@ -21,12 +21,7 @@ Always Centred continuously centres and zooms the view on player owned character
 
 ## Future of Always Centred
 
-In V0006 the module will be returned to fully working but extremely simplified to aid with maintenance.
-At best, Always Centred is in "maintainance only mode" but it should be seen as unsupported going forwards.  
-
-To be open, I barely use the module myself and in the year since it has been released it has generated minimal income.  
-As a result there is little reason for my continued support of this module.
-
+No future support is planned for Always Centred
 
 ## Instructions
 Set "Mode" to Party View or Selected Token, the rest should be automatic.
@@ -90,6 +85,12 @@ As Keybind Lib has not officially been released it is not a dependency of this m
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
 ## Change log
+
+#### 0006
+
+- Issue with DM Mode Resolved
+- Keybind options removed.
+- Overall the program has been simplified
 
 #### 0005 - V9 Compatibility Version
 
