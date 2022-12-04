@@ -18,9 +18,16 @@
 
 Always Centred continuously centres and zooms the view on player owned characters or the currently selected token.
 
+
 ## Future of Always Centred
 
-No future support is planned for Always Centred
+Always Centred will be updated to V10.
+
+Going forwards Always Centred should be treated as unsupported.
+
+I will continue to develop Always Centred for my own games so major bugs will be fixed, but edge cases will take longer to get to.
+
+
 
 ## Instructions
 Set "Mode" to Party View or Selected Token, the rest should be automatic.
@@ -67,19 +74,7 @@ Outputs addition information to the console.
 Key bindings for GM Controls and change mode are available but requires [Keybind Lib](https://gitlab.com/fvtt-modules-lab/keybind-lib). 
 As Keybind Lib has not officially been released it is not a dependency of this module, but is supported if installed.
 
-## Known issues
-
-- Minor conflict with multilevel tokens; currently mitigated entirely.  Always centred will not centre if a token moves inside an MLT object.
-- When in Party View mode, if the tokens are too spread to fit in view, bouncing will occur. (Fix planned)
-
-
-## Changes under consideration
-
-- Locking the viewport to stay within the map.
-- Centring the view as a group when multiple tokens are selected.
-- New "combat" mode where the focus follows the active combatant.
-
-###Licence
+## Licence
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
