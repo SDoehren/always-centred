@@ -114,4 +114,12 @@ export const registerSettings = function () {
         default: true,
         type: Boolean
     });
+
+    game.settings.register("always-centred", "LatestVersion", {
+        name: "Latest Version",
+        scope: "world",
+        config: false,
+        default: "",
+        type: String
+    });
 };
