@@ -69,11 +69,6 @@ Whether to include all player owned tokens or just those the user can see in the
 - Debug: (Default: Disable)  
 Outputs addition information to the console.
 
-## Key binding
-
-Key bindings for GM Controls and change mode are available but requires [Keybind Lib](https://gitlab.com/fvtt-modules-lab/keybind-lib). 
-As Keybind Lib has not officially been released it is not a dependency of this module, but is supported if installed.
-
 ## Licence
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.

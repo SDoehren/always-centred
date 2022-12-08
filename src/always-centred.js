@@ -37,24 +37,6 @@ Hooks.once('init', async () => {
     console.log('always-centred | Initializing always-centred');
     registerSettings();
 
-
-    if (game.modules.get("keybind-lib") !== undefined) {
-        if (game.modules.get("keybind-lib").active === true) {
-
-            KeybindLib.register("always-centred", "Keybind-GMControl", {
-                name: "Toggle GM Control",
-                default: "Ctrl + KeyD",
-                onKeyDown: () => DMGlobalControlSwitch()
-            });
-
-
-            KeybindLib.register("always-centred", "Keybind-Mode", {
-                name: "Toggle",
-                default: "Ctrl + KeyF",
-                onKeyDown: () => SettingsChange("Rotate")
-            });
-        }
-    }
 });
 
 Hooks.on("ready", () => {
@@ -63,22 +45,22 @@ Hooks.on("ready", () => {
     console.log("always-centred | Listener")
     game.socket.on('module.always-centred', (data) => DMControl(data));
 
-
-    if ((game.settings.get("always-centred",'DMControl')) & !(game.user.isGM)){
-        ui.notifications.info("Always Centred | The DM has control of your screen centring.");
+    if(!game.settings.get("core", "noCanvas")) {
+        game.alwayscentred = new AlwaysCentred();
     }
 
-    if ((game.settings.get("always-centred",'DMControl')) & (game.user.isGM)){
+
+    if ((game.settings.get("always-centred",'DMControl'))){
         ui.notifications.info("Always Centred | The DM has control of the player screen centring.");
     }
 
     if (game.settings.get("always-centred", "LatestVersion")!==game.modules.get("always-centred").data.version && game.user.isGM){
         let message = "Hi,<br>Thanks for installing/updating Always Centred" +
             "<br>This V10 version of Always Centred has fundamental changes in the calculations, this may lead to unexpected behaviour.<br>" +
-            "<br>Scene controls are no longer supported by Always Centred and have instead been replaced by macros performing the same behaviours.<br>" +
+            "<br>Scene controls are no longer supported by Always Centred and have instead been replaced by an API performing the same behaviours.<br>" +
             "<br>This message will not be shown again until the next update.<br><br>" +
             "All the best,<br>SDoehren<br>Discord Server: https://discord.gg/QNQZwGGxuN"
-        ChatMessage.create({whisper:ChatMessage.getWhisperRecipients("GM"),content: message,speaker:ChatMessage.getSpeaker({alias: "Tension Pool"})}, {});
+        ChatMessage.create({whisper:ChatMessage.getWhisperRecipients("GM"),content: message,speaker:ChatMessage.getSpeaker({alias: "Always Centred"})}, {});
         game.settings.set("always-centred", "LatestVersion",game.modules.get("always-centred").data.version)
     }
 
@@ -273,6 +255,19 @@ async function runmainprocess(token){
 
     let panspeed;
 
+    if (!(skipdmcheck)) {
+        if (game.user.isGM & game.settings.get("always-centred", 'DMControl')) {
+            console.log("always-centred | boundingbox emitted");
+            game.socket.emit('module.always-centred', {
+                boundingbox: boundingbox,
+                zoom: zoom,
+                panspeed: panspeed,
+                mode: game.settings.get("always-centred", 'mode'),
+                token: token
+            });
+        }
+    }
+
     await panandzoom(boundingbox, panspeed,zoom)
 
 }
@@ -280,3 +275,58 @@ async function runmainprocess(token){
 Hooks.on('updateToken', async (token, delta, diff) => {
     await runmainprocess(token)
 })
+
+function SettingsChange(mode) {
+    let modetext = {
+        disabled:"disabled",
+        pcs:"Party View",
+        selectedtoken:"Selected Token"
+    };
+
+    let moderotate = {
+        disabled:"pcs",
+        pcs:"selectedtoken",
+        selectedtoken:"disabled"
+    };
+
+    if (mode==="Rotate"){
+        mode = moderotate[game.settings.get("always-centred",'mode')];
+    }
+
+    game.settings.set("always-centred",'mode',mode);
+
+    ui.notifications.info("Always Centred | Mode set to '"+modetext[mode]+"'.");
+
+
+    if ((game.settings.get("always-centred",'DMControl')) & !(game.user.isGM)){
+        ui.notifications.info("Always Centred | The DM has control of your screen centring.");
+    }
+}
+
+
+export class AlwaysCentred {
+    async dmcontrol() {
+        let elactive = !(game.settings.get("always-centred", 'DMControl'));
+        game.settings.set("always-centred", 'DMControl', elactive);
+
+        if (elactive) {
+            game.socket.emit('module.always-centred', {infonote: "The DM has taken control of your screen centring."});
+            ui.notifications.info("Always Centred | The GM has control");
+        } else {
+            game.socket.emit('module.always-centred', {infonote: "The DM has released control of your screen centring."});
+            ui.notifications.info("Always Centred | The GM has released control");
+        }
+    }
+
+    async centredisabled(){
+        await SettingsChange("disabled")
+    }
+
+    async centreparty(){
+        await SettingsChange("pcs")
+    }
+
+    async centreselectedtoken(){
+        await SettingsChange("selectedtoken")
+    }
+}

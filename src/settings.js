@@ -13,15 +13,6 @@ export const registerSettings = function () {
         choices: {disabled: "Disabled", pcs: "Party View", selectedtoken: "Selected Token"},
     });
 
-    /*game.settings.register("always-centred", "combatfocus", {
-        name: "Combat Focus",
-        hint:"Focus camera on current combatant on turn change.",
-        scope: "client",
-        config: true,
-        default: false,
-        type: Boolean
-    });*/
-
     game.settings.register("always-centred", "autozoom", {
         name: "Auto Zoom",
         hint:"Adjust zoom as well as position. Highly Recommended.",
@@ -41,16 +32,6 @@ export const registerSettings = function () {
         type: Boolean
     });
 
-    game.settings.register("always-centred", "enablecontrols", {
-        name: "Enable HUD Controls",
-        scope: "client",
-        config: true,
-        default: true,
-        type: Boolean,
-        onChange: () => {
-            location.reload();
-        }
-    });
 
     game.settings.register("always-centred", "paddingsq", {
         name: "Padding (squares)",

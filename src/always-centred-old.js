@@ -410,3 +410,4 @@ Hooks.on('updateToken', async (token, delta, diff) => {
         runmainprocess(token)
     }
 })
+
