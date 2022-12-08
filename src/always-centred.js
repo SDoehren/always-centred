@@ -1,6 +1,4 @@
 import {registerSettings} from './settings.js';
-import {DMGlobalControlSwitch} from './dmcontrols.js';
-import {selectedtokenbox, PCsbox} from './boxfinder.js';
 
 'use strict';
 
@@ -24,7 +22,7 @@ function DMControl(data){
         }
 
 
-        if (visids.includes(data.token.id)) {
+        if (visids.includes(data.token._id)) {
             panandzoom(data.boundingbox, data.panspeed, data.zoom)
         } else {
             runmainprocess(data.token,true)
