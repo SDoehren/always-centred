@@ -58,6 +58,7 @@ Hooks.on("ready", () => {
         let message = "Hi,<br>Thanks for installing/updating Always Centred" +
             "<br>This V10 version of Always Centred has fundamental changes in the calculations, this may lead to unexpected behaviour.<br>" +
             "<br>Scene controls are no longer supported by Always Centred and have instead been replaced by an API performing the same behaviours.<br>" +
+            "Scene controls are no longer supported by Always Centred and have instead been replaced by an API performing the same behaviours.<br>" +
             "<br>This message will not be shown again until the next update.<br><br>" +
             "All the best,<br>SDoehren<br>Discord Server: https://discord.gg/QNQZwGGxuN"
         ChatMessage.create({whisper:ChatMessage.getWhisperRecipients("GM"),content: message,speaker:ChatMessage.getSpeaker({alias: "Always Centred"})}, {});
@@ -242,7 +243,7 @@ async function panandzoom(boundingbox, panspeed,zoom){
     //window.Azzu.Pings.perform({x:Xmid ,y:Ymid})
 }
 
-async function runmainprocess(token){
+async function runmainprocess(token,skipdmcheck){
     if (game.settings.get("always-centred", 'mode',) === "disabled") {return false;}
 
     let boundingbox = getboundingbox(token);

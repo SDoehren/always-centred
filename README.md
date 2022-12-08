@@ -37,16 +37,14 @@ Set "Mode" to Party View or Selected Token, the rest should be automatic.
 - Mode: (default: Disabled)  
 Disabled: Module off  
 Party View: Will zoom and centre to include all **player owned** tokens.  
-Selected Token:  Will zoom and centre to include only the selected token.  
-
-"Selected Token" can work when multiple tokens are selected but it will only focus on one at a time and may lead to the camera bouncing.
+Selected Token:  Will zoom and centre to include only the selected tokens.  
 
 - Auto Zoom: (default: Enabled)  
 Whether the camera will move towards and away from the board as needed.
 
 - Mitigate Bouncing Issue: (default: Enabled)  
 Only relevant when Auto Zoom is set to off and Mode is Party View.  
-  As two tokens reach the edge of the screen it will begin to bounce as Foundry tries to pan to the new position. This setting forces Auto Zoom when required to avoid this.
+As two tokens reach the edge of the screen it will begin to bounce as Foundry tries to pan to the new position. This setting forces Auto Zoom when required to avoid this.
   
 - Padding (squares): (default:12)  
 The number squares added to the box around the targets.
@@ -74,6 +72,12 @@ Outputs addition information to the console.
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
 ## Change log
+
+#### 0010 - V10 Compatibility Version
+
+- V10 Compatibility added
+- Scene Controls Removed
+- API added
 
 #### 0006
 
