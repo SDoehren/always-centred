@@ -75,11 +75,6 @@ function getboundingbox(token){
 
         tokens = canvas.tokens.controlled
 
-        boundingbox = {
-          topleft: topleft,
-          bottomright: bottomright,
-        };
-
     } else if (game.settings.get("always-centred", 'mode',) === "pcs") {
 
         //if token not owned by player exit early

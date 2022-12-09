@@ -2,7 +2,7 @@
   "name": "always-centred",
   "title": "Always Centred",
   "description": "Always Centred is a module that automatically centres the camera on the players' tokens and zooms to fit them in.",
-  "version": "0007",
+  "version": "0087",
   "authors": [{"name": "SDoehren"}],
   "esmodules": ["src/always-centred.js"],
   "compatibility": {
@@ -12,7 +12,7 @@
   },
   "url": "https://github.com/SDoehren/always-centred",
   "manifest": "https://github.com/SDoehren/always-centred/releases/latest/download/module.json",
-  "download": "https://github.com/SDoehren/always-centred/releases/latest/download/always-centred0007.zip",
+  "download": "https://github.com/SDoehren/always-centred/releases/latest/download/always-centred0008.zip",
   "license": "CC-BY-NC-SA-4.0",
   "readme": "https://raw.githubusercontent.com/SDoehren/always-centred/main/README.md",
   "socket": true,

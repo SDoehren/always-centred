@@ -73,7 +73,9 @@ Outputs addition information to the console.
 
 ## Change log
 
-#### 0010 - V10 Compatibility Version
+#### 0008 - Hotfix
+
+#### 0007 - V10 Compatibility Version
 
 - V10 Compatibility added
 - Scene Controls Removed
