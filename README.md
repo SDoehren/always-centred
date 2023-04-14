@@ -27,6 +27,9 @@ Going forwards Always Centred should be treated as unsupported.
 
 I will continue to develop Always Centred for my own games so major bugs will be fixed, but edge cases will take longer to get to.
 
+It is recommended that you consider use of [Monk's Common Display](https://github.com/ironmonk88/monks-common-display).  
+It is an excellent module and covers most of what Always Centred does.
+
 
 
 ## Instructions
