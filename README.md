@@ -76,6 +76,11 @@ Outputs addition information to the console.
 
 ## Change log
 
+#### 0009 - FoundryVTT v11 compatibility
+Mainly declarational changes in module.json, and some cosmetics.
+Also slightly harmonized version numbering: It now reads "0009" across the whole mod.
+Semantic versioning in upcoming releases recommended!
+
 #### 0008 - Hotfix
 
 #### 0007 - V10 Compatibility Version
