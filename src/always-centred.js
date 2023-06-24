@@ -53,12 +53,14 @@ Hooks.on("ready", () => {
     }
 
     if (game.settings.get("always-centred", "LatestVersion")!==game.modules.get("always-centred").data.version && game.user.isGM){
-        let message = "Hi,<br>Thanks for installing/updating Always Centred" +
-            "<br>This V10 version of Always Centred has fundamental changes in the calculations, this may lead to unexpected behaviour.<br>" +
-            "<br>Scene controls are no longer supported by Always Centred and have instead been replaced by an API performing the same behaviours.<br>" +
-            "Scene controls are no longer supported by Always Centred and have instead been replaced by an API performing the same behaviours.<br>" +
-            "<br>This message will not be shown again until the next update.<br><br>" +
-            "All the best,<br>SDoehren<br>Discord Server: https://discord.gg/QNQZwGGxuN"
+        let message = "This module is now compatible with Foundry VTT v11. <br/>" +
+            "Nothing has changed in a functional way. Find below the original note for the most recent update (prior to v11 migration):<br/><br/>" +
+            "Hi,<br/>Thanks for installing/updating Always Centred" +
+            "<br/>This V10 version of Always Centred has fundamental changes in the calculations, this may lead to unexpected behaviour.<br/>" +
+            "<br/>Scene controls are no longer supported by Always Centred and have instead been replaced by an API performing the same behaviours.<br/>" +
+            "Scene controls are no longer supported by Always Centred and have instead been replaced by an API performing the same behaviours.<br/>" +
+            "<br/>This message will not be shown again until the next update.<br/><br/>" +
+            "All the best,<br/>SDoehren<br/>Discord Server: https://discord.gg/QNQZwGGxuN";
         ChatMessage.create({whisper:ChatMessage.getWhisperRecipients("GM"),content: message,speaker:ChatMessage.getSpeaker({alias: "Always Centred"})}, {});
         game.settings.set("always-centred", "LatestVersion",game.modules.get("always-centred").data.version)
     }

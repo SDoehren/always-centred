@@ -92,7 +92,7 @@ export const registerSettings = function () {
         hint:"",
         scope: "client",
         config: true,
-        default: true,
+        default: false,
         type: Boolean
     });
 

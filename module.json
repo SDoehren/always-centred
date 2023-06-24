@@ -1,14 +1,34 @@
 {
-  "name": "always-centred",
+  "id": "always-centred",
   "title": "Always Centred",
   "description": "Always Centred is a module that automatically centres the camera on the players' tokens and zooms to fit them in.",
-  "version": "0087",
+  "version": "0009",
   "authors": [{"name": "SDoehren"}],
   "esmodules": ["src/always-centred.js"],
   "compatibility": {
     "minimum": "10",
-    "verified": "10",
-    "maximum": "10"
+    "verified": "11",
+    "maximum": "11"
+  },
+  "minimumCoreVersion": "10",
+   "media": [
+      {
+        "type": "setup",
+        "url": "modules/always-centred/img/always_centred_banner.png",
+        "thumbnail": "modules/always-centred/img/always_centred_banner.png"
+      }
+  ],
+  "relationships": {
+    "requires": [
+      {
+        "id": "socketlib",
+        "type": "module",
+        "manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/master/module.json",
+        "compatibility": {
+          "verified": "1.0.12"
+        }
+      }
+    ]
   },
   "url": "https://github.com/SDoehren/always-centred",
   "manifest": "https://github.com/SDoehren/always-centred/releases/latest/download/module.json",
