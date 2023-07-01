@@ -52,7 +52,7 @@ Hooks.on("ready", () => {
         ui.notifications.info("Always Centred | The DM has control of the player screen centring.");
     }
 
-    if (game.settings.get("always-centred", "LatestVersion")!==game.modules.get("always-centred").data.version && game.user.isGM){
+    if (game.settings.get("always-centred", "LatestVersion")!==game.modules.get("always-centred").version && game.user.isGM){
         let message = "This module is now compatible with Foundry VTT v11. <br/>" +
             "Nothing has changed in a functional way. Find below the original note for the most recent update (prior to v11 migration):<br/><br/>" +
             "Hi,<br/>Thanks for installing/updating Always Centred" +
@@ -62,7 +62,7 @@ Hooks.on("ready", () => {
             "<br/>This message will not be shown again until the next update.<br/><br/>" +
             "All the best,<br/>SDoehren<br/>Discord Server: https://discord.gg/QNQZwGGxuN";
         ChatMessage.create({whisper:ChatMessage.getWhisperRecipients("GM"),content: message,speaker:ChatMessage.getSpeaker({alias: "Always Centred"})}, {});
-        game.settings.set("always-centred", "LatestVersion",game.modules.get("always-centred").data.version)
+        game.settings.set("always-centred", "LatestVersion",game.modules.get("always-centred").version)
     }
 
 });
